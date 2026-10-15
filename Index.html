@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portafolio profesional de desarrollo web full stack de Deg.">
+  <meta name="theme-color" content="#f4f2e9">
+  <title>Deg | Desarrollador Full Stack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="header-left">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+        <span class="brand-name">Deg<span class="cursor">_</span></span>
+      </a>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Activar modo oscuro" aria-pressed="false" title="Cambiar tema"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">Modo oscuro</span></button>
+    </div>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">MENU</button>
+    <nav id="site-nav" class="site-nav" aria-label="Navegacion principal">
+      <a href="#proyectos">Proyectos</a>
+      <a href="#stack">Stack</a>
+      <a href="#sobre-mi">Sobre mi</a>
+      <a class="github-button" href="https://github.com/" target="_blank" rel="noreferrer" aria-label="Visitar GitHub de Deg" title="GitHub de Deg"><svg class="github-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5a10.5 10.5 0 0 0-3.32 20.46c.53.1.72-.23.72-.5v-1.8c-2.93.64-3.55-1.25-3.55-1.25-.48-1.22-1.17-1.55-1.17-1.55-.96-.66.07-.65.07-.65 1.06.08 1.62 1.09 1.62 1.09.94 1.61 2.46 1.14 3.06.87.1-.68.37-1.14.67-1.4-2.34-.27-4.8-1.17-4.8-5.2 0-1.15.41-2.09 1.08-2.83-.11-.27-.47-1.34.1-2.79 0 0 .88-.28 2.89 1.08A10 10 0 0 1 12 6.7a10 10 0 0 1 2.63.36c2-.136 2.88-1.08 2.88-1.08.57 1.45.21 2.52.1 2.79.68.74 1.09 1.68 1.09 2.83 0 4.04-2.47 4.92-4.82 5.19.38.33.72.97.72 1.96v2.9c0 .27.19.6.73.5A10.5 10.5 0 0 0 12 1.5Z"/></svg><span>GitHub</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="inicio" class="hero section-shell">
+      <div class="hero-copy reveal">
+        <p class="eyebrow"><span class="status-dot"></span> Disponible para proyectos</p>
+        <h1>Desarrollo web full stack: <em>frontend atractivo y backend eficiente.</em></h1>
+        <p class="hero-intro">Desarrollador full stack enfocado en crear productos claros, veloces y con personalidad. Codigo limpio, ideas grandes.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#proyectos">Ver proyectos <span aria-hidden="true">-></span></a>
+          <a class="button button-ghost" href="#contacto">Contactame</a>
+        </div>
+        <div class="hero-meta">
+          <span><strong>02+</strong> años creando<br>sitios web responsive</span>
+          <span><strong>03</strong> proyectos lanzados</span>
+        </div>
+      </div>
+      <div class="hero-console reveal" aria-label="Perfil de desarrollador">
+        <div class="console-top"><span>PROFILE.exe</span><span>■ ■ ■</span></div>
+        <div class="avatar-stage">
+          <div class="code-screen" aria-hidden="true"><span>const deg = {</span><span>  coffee: true,</span><span>  code: 'ready'</span><span>};</span></div>
+          <div class="pixel-avatar" aria-hidden="true"><i class="hair"></i><i class="face"></i><i class="neck"></i><i class="eye eye-left"></i><i class="eye eye-right"></i><i class="mouth"></i><i class="shirt"></i><i class="typing-hand"></i><i class="coffee-cup"></i><i class="coffee-steam"></i></div><div class="pixel-desk" aria-hidden="true"><span class="keyboard"></span><span class="desk-line"></span></div>
+          <div class="level-badge">LVL 04</div>
+        </div>
+        <div class="console-info"><span>PLAYER_01</span><strong>FULL-STACK<br>DEVELOPER</strong></div>
+        <div class="xp-label"><span>EXPERIENCIA</span><span>84%</span></div>
+        <div class="xp-bar"><span></span></div>
+        <div class="console-bottom"><span>STATUS: ONLINE</span><span>///</span></div>
+      </div>
+    </section>
+
+    <section id="proyectos" class="projects section-shell">
+      <div class="section-heading reveal"><div><p class="eyebrow">01 / trabajo seleccionado</p><h2>Proyectos <span>destacados</span></h2></div><button id="open-project-form" class="text-button" type="button">+ Cargar proyecto</button></div>
+      <div class="project-viewer reveal">
+        <div id="project-track" class="project-track"></div>
+        <div class="slider-controls"><div id="project-dots" class="project-dots" aria-label="Seleccionar proyecto"></div><div class="arrow-controls"><button id="prev-project" class="icon-button" type="button" aria-label="Proyecto anterior">&#8592;</button><button id="next-project" class="icon-button" type="button" aria-label="Siguiente proyecto">&#8594;</button></div></div>
+      </div>
+    </section>
+
+    <section id="stack" class="stack section-shell">
+      <div class="section-heading reveal"><div><p class="eyebrow">02 / herramientas</p><h2>Mi <span>stack</span></h2></div></div>
+      <div class="stack-grid reveal">
+        <article class="skill-item" style="--skill:95%"><div class="skill-icon js-icon">JS</div><div><h3>JavaScript</h3><p>Interacciones y logica</p></div><span class="skill-level">95%</span></article>
+        <article class="skill-item" style="--skill:98%"><div class="skill-icon">&lt;/&gt;</div><div><h3>HTML + CSS</h3><p>Interfaces responsive</p></div><span class="skill-level">100%</span></article>
+        <article class="skill-item" style="--skill:88%"><div class="skill-icon bootstrap-icon">B</div><div><h3>Bootstrap</h3><p>Sistemas y prototipos</p></div><span class="skill-level">100%</span></article>
+        <article class="skill-item" style="--skill:82%"><div class="skill-icon python-icon">Py</div><div><h3>Python</h3><p>Automatizacion y datos</p></div><span class="skill-level">92%</span></article>
+        <article class="skill-item skill-item-java" style="--skill:90%"><div class="skill-icon java-icon">J</div><div><h3>Java</h3><p>Desarrollo backend</p></div><span class="skill-level">90%</span></article>
+        <article class="skill-item" style="--skill:80%"><div class="skill-icon react-icon">R</div><div><h3>React</h3><p>Interfaces y componentes</p></div><span class="skill-level">80%</span></article>
+        <article class="skill-item" style="--skill:90%"><div class="skill-icon github-icon">GH</div><div><h3>GitHub</h3><p>Control de versiones y colaboración</p></div><span class="skill-level">90%</span></article>
+        <article class="skill-item" style="--skill:80%"><div class="skill-icon netlify-icon">N</div><div><h3>Netlify</h3><p>Despliegue de sitios web</p></div><span class="skill-level">80%</span></article>
+      </div>
+    </section>
+
+    <section id="sobre-mi" class="about section-shell"><div class="about-copy reveal"><p class="eyebrow">03 / el jugador y el desarrollador</p><h2>Codigo con <span>intencion.</span></h2><p>Creo proyectos web full stack de principio a fin: interfaces frontend, APIs y backend listos para funcionar.</p><div class="about-tags"><span>Inteligencia artificial</span><span>Desarrollo web full stack</span><span>Aprendizaje continuo</span></div></div><div class="quote-box reveal"><span class="quote-mark">“</span><p>Si puedes crear una idea por mas descabellada que suene, hazla realidad.</p><span class="quote-author">— Deg</span></div></section>
+
+    <section id="contacto" class="contact section-shell reveal"><p class="eyebrow">04 / siguiente nivel</p><h2>Hagamos algo <span>memorable.</span></h2><p>Tu proxima idea merece una buena partida. Cuentame que tienes en mente y lo desarrollamos.</p><a class="button button-primary" href="mailto:hola@deg.dev">hola@deg.dev <span aria-hidden="true">-></span></a></section>
+  </main>
+  <footer class="site-footer section-shell"><span>© 2026 DEG</span><span>HECHO CON <b>☕</b> Y BUEN CODIGO</span><a href="#inicio">VOLVER ARRIBA ↑</a></footer>
+
+  <dialog id="project-dialog" class="project-dialog"><form id="project-form" novalidate><button id="close-project-form" class="dialog-close" type="button" aria-label="Cerrar">×</button><p class="eyebrow">Nuevo proyecto</p><h2>Agrega una nueva <span>partida.</span></h2><label>Nombre<input id="project-name" name="project-name" required maxlength="38" placeholder="Ej. Tienda Pixel"></label><label>Descripcion<textarea id="project-description" name="project-description" required maxlength="500" rows="4" placeholder="Describe el proyecto, sus funciones y tecnologías..."></textarea><span id="description-counter" class="description-counter" aria-live="polite">0 / 500 caracteres</span></label><label>Categoria<select id="project-category" name="project-category" required><option value="" disabled selected>Selecciona una categoria</option><option value="Web">Web</option><option value="Web App">Web App</option></select></label><label>Repositorio GitHub<input id="project-repository" name="project-repository" type="text" inputmode="url" placeholder="github.com/usuario/proyecto"></label><label>Proyecto desplegado en Netlify<input id="project-demo" name="project-demo" type="text" inputmode="url" placeholder="mi-proyecto.netlify.app"></label><p id="project-form-error" class="form-message" role="alert" hidden></p><button class="button button-primary" type="submit">Guardar proyecto <span>-></span></button></form></dialog>
+  <script src="script.js"></script>
+</body>
+</html>
