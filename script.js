@@ -7,14 +7,40 @@ export function initializePortfolio() {
   const projectTrack = document.querySelector("#project-track");
   const projectDots = document.querySelector("#project-dots");
   const projectError = document.querySelector("#project-form-error");
-  const projectDescription = projectForm.elements.namedItem("project-description");
+  const projectDescription = projectForm?.elements.namedItem("project-description");
   const descriptionCounter = document.querySelector("#description-counter");
   const menuToggle = document.querySelector(".menu-toggle");
   const siteNav = document.querySelector("#site-nav");
+  const prevProjectButton = document.querySelector("#prev-project");
+  const nextProjectButton = document.querySelector("#next-project");
+  const openProjectButton = document.querySelector("#open-project-form");
+  const closeProjectButton = document.querySelector("#close-project-form");
   const projectStorageKey = "deg-portfolio-projects";
   const themeStorageKey = "deg-portfolio-theme";
   const brandMark = document.querySelector(".brand-mark");
   const codeSymbols = ["</>", "{ }", "[ ]", "=>", "01", "!= ", "&&"];
+
+  if (
+    !themeToggle ||
+    !projectDialog ||
+    !projectForm ||
+    !projectTrack ||
+    !projectDots ||
+    !projectError ||
+    !projectDescription ||
+    !descriptionCounter ||
+    !menuToggle ||
+    !siteNav ||
+    !prevProjectButton ||
+    !nextProjectButton ||
+    !openProjectButton ||
+    !closeProjectButton ||
+    !brandMark
+  ) {
+    throw new Error(
+      "No se pudo inicializar el portafolio: faltan elementos requeridos en el HTML."
+    );
+  }
 
   let projects = [];
   let activeProject = 0;
@@ -182,8 +208,8 @@ export function initializePortfolio() {
 
     if (!projects.length) {
       showEmptyState("Aun no hay proyectos. Usa + Cargar proyecto para agregar el primero.");
-      document.querySelector("#prev-project").disabled = true;
-      document.querySelector("#next-project").disabled = true;
+      prevProjectButton.disabled = true;
+      nextProjectButton.disabled = true;
       return;
     }
 
@@ -258,8 +284,8 @@ export function initializePortfolio() {
       projectDots.append(dot);
     });
 
-    document.querySelector("#prev-project").disabled = projects.length < 2;
-    document.querySelector("#next-project").disabled = projects.length < 2;
+    prevProjectButton.disabled = projects.length < 2;
+    nextProjectButton.disabled = projects.length < 2;
   }
 
   const storedProjectData = readProjects();
@@ -273,15 +299,15 @@ export function initializePortfolio() {
     renderProjects();
   }
 
-  document.querySelector("#prev-project").addEventListener("click", () => changeProject(-1), { signal });
-  document.querySelector("#next-project").addEventListener("click", () => changeProject(1), { signal });
+  prevProjectButton.addEventListener("click", () => changeProject(-1), { signal });
+  nextProjectButton.addEventListener("click", () => changeProject(1), { signal });
 
-  document.querySelector("#open-project-form").addEventListener("click", () => {
+  openProjectButton.addEventListener("click", () => {
     projectError.hidden = true;
     projectDialog.showModal();
   }, { signal });
 
-  document.querySelector("#close-project-form").addEventListener("click", () => {
+  closeProjectButton.addEventListener("click", () => {
     projectDialog.close();
   }, { signal });
 

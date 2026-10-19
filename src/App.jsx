@@ -1,24 +1,457 @@
-import { useEffect } from 'react'
-import { initializePortfolio } from '../script.js'
-import portfolioDocument from '../Portafolio/Index.html?raw'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
-const bodyMatch = portfolioDocument.match(
-  /<body[^>]*>([\s\S]*?)<script\b[^>]*src="script\.js"[^>]*><\/script>\s*<\/body>/i,
-)
+const projectStorageKey = 'deg-portfolio-projects'
+const themeStorageKey = 'deg-portfolio-theme'
+const codeSymbols = ['</>', '{ }', '[ ]', '=>', '01', '!=', '&&']
+const initialProjectForm = {
+  name: '',
+  description: '',
+  category: '',
+  repository: '',
+  demo: '',
+}
 
-if (!bodyMatch) {
-  throw new Error('No se pudo cargar el contenido HTML del portafolio.')
+function normalizeUrl(value) {
+  const trimmedValue = value.trim()
+  if (!trimmedValue) return null
+
+  try {
+    const url = new URL(
+      /^[a-z][a-z\d+.-]*:/i.test(trimmedValue)
+        ? trimmedValue
+        : `https://${trimmedValue}`,
+    )
+    if (url.protocol !== 'https:' && url.protocol !== 'http:') return null
+    return url.href
+  } catch {
+    return null
+  }
+}
+
+function isGitHubRepository(url) {
+  if (!url) return false
+  const parsedUrl = new URL(url)
+  return (
+    parsedUrl.hostname === 'github.com' &&
+    parsedUrl.pathname.split('/').filter(Boolean).length >= 2
+  )
+}
+
+function isNetlifySite(url) {
+  if (!url) return false
+  const hostname = new URL(url).hostname
+  return hostname.endsWith('.netlify.app') && hostname.split('.').length >= 3
+}
+
+function isValidProject(project) {
+  if (
+    !project ||
+    typeof project.name !== 'string' ||
+    !project.name.trim() ||
+    typeof project.description !== 'string' ||
+    !project.description.trim() ||
+    typeof project.category !== 'string' ||
+    !project.category.trim() ||
+    (project.repository !== null && typeof project.repository !== 'string') ||
+    (project.demo !== null && typeof project.demo !== 'string')
+  ) {
+    return false
+  }
+
+  const repository = project.repository ? normalizeUrl(project.repository) : null
+  const demo = project.demo ? normalizeUrl(project.demo) : null
+  return (
+    (repository || demo) &&
+    (!project.repository || isGitHubRepository(repository)) &&
+    (!project.demo || isNetlifySite(demo))
+  )
+}
+
+function readStoredProjects() {
+  let savedProjects
+  try {
+    savedProjects = localStorage.getItem(projectStorageKey)
+  } catch (error) {
+    console.error('No se pudieron leer los proyectos guardados.', error)
+    return { projects: [], error: 'No se pudieron leer los proyectos guardados.' }
+  }
+
+  if (!savedProjects) return { projects: [], error: '' }
+
+  try {
+    const parsedProjects = JSON.parse(savedProjects)
+    if (!Array.isArray(parsedProjects) || !parsedProjects.every(isValidProject)) {
+      throw new TypeError('El formato de los proyectos guardados no es válido.')
+    }
+
+    return {
+      projects: parsedProjects.map((project) => ({
+        ...project,
+        repository: project.repository ? normalizeUrl(project.repository) : null,
+        demo: project.demo ? normalizeUrl(project.demo) : null,
+      })),
+      error: '',
+    }
+  } catch (error) {
+    console.error('No se pudieron cargar los proyectos guardados.', error)
+    return { projects: [], error: 'No se pudieron cargar los proyectos guardados.' }
+  }
+}
+
+function readStoredTheme() {
+  try {
+    return localStorage.getItem(themeStorageKey) === 'dark' ? 'dark' : 'light'
+  } catch (error) {
+    console.error('No se pudo leer el tema guardado.', error)
+    return 'light'
+  }
+}
+
+function ProjectLink({ href, className, children }) {
+  return (
+    <a className={className} href={href} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  )
 }
 
 function App() {
-  useEffect(() => initializePortfolio(), [])
+  const dialogRef = useRef(null)
+  const [storedProjectData] = useState(readStoredProjects)
+  const [theme, setTheme] = useState(readStoredTheme)
+  const [brandMark, setBrandMark] = useState('</>')
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [projects, setProjects] = useState(storedProjectData.projects)
+  const [activeProject, setActiveProject] = useState(0)
+  const [loadError, setLoadError] = useState(storedProjectData.error)
+  const [formError, setFormError] = useState('')
+  const [formData, setFormData] = useState(initialProjectForm)
+
+  useEffect(() => {
+    const root = document.documentElement
+    root.dataset.theme = theme
+    root.classList.add('theme-ready')
+    const themeColor = document.querySelector('meta[name="theme-color"]')
+    if (themeColor) themeColor.content = theme === 'dark' ? '#171827' : '#f4f2e9'
+
+    try {
+      localStorage.setItem(themeStorageKey, theme)
+    } catch (error) {
+      console.error('No se pudo guardar la preferencia de tema.', error)
+    }
+
+    return () => root.classList.remove('theme-ready')
+  }, [theme])
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setBrandMark((currentMark) => {
+        const availableSymbols = codeSymbols.filter((symbol) => symbol !== currentMark)
+        return availableSymbols[Math.floor(Math.random() * availableSymbols.length)]
+      })
+    }, 60_000)
+
+    return () => window.clearInterval(intervalId)
+  }, [])
+
+  function saveProjects(updatedProjects) {
+    try {
+      localStorage.setItem(projectStorageKey, JSON.stringify(updatedProjects))
+      setLoadError('')
+      return true
+    } catch (error) {
+      console.error('No se pudo guardar el proyecto.', error)
+      setFormError('No se pudo guardar el proyecto en este navegador. Inténtalo de nuevo.')
+      return false
+    }
+  }
+
+  function handleProjectSubmit(event) {
+    event.preventDefault()
+    setFormError('')
+
+    if (!formData.name.trim()) {
+      setFormError('El nombre del proyecto es obligatorio.')
+      return
+    }
+    if (!formData.description.trim()) {
+      setFormError('La descripción del proyecto es obligatoria.')
+      return
+    }
+    if (!formData.category) {
+      setFormError('Selecciona una categoría para el proyecto.')
+      return
+    }
+
+    const repositoryText = formData.repository.trim()
+    const demoText = formData.demo.trim()
+    const repository = repositoryText ? normalizeUrl(repositoryText) : null
+    const demo = demoText ? normalizeUrl(demoText) : null
+
+    if (!repositoryText && !demoText) {
+      setFormError('Agrega al menos un enlace válido de GitHub o Netlify.')
+      return
+    }
+    if (repositoryText && !isGitHubRepository(repository)) {
+      setFormError('Ingresa el enlace de un repositorio válido de github.com.')
+      return
+    }
+    if (demoText && !isNetlifySite(demo)) {
+      setFormError('Ingresa un enlace válido de un sitio publicado en netlify.app.')
+      return
+    }
+
+    const newProject = {
+      name: formData.name.trim(),
+      description: formData.description.trim(),
+      category: formData.category,
+      repository,
+      demo,
+    }
+    const updatedProjects = [...projects, newProject]
+    if (!saveProjects(updatedProjects)) return
+
+    setProjects(updatedProjects)
+    setActiveProject(updatedProjects.length - 1)
+    setFormData(initialProjectForm)
+    dialogRef.current?.close()
+  }
+
+  function openProjectForm() {
+    setFormError('')
+    dialogRef.current?.showModal()
+  }
+
+  function updateFormField(event) {
+    const { name, value } = event.target
+    const formFieldNames = {
+      'project-name': 'name',
+      'project-description': 'description',
+      'project-category': 'category',
+      'project-repository': 'repository',
+      'project-demo': 'demo',
+    }
+    const fieldName = formFieldNames[name]
+    setFormData((current) => ({ ...current, [fieldName]: value }))
+  }
+
+  function changeProject(direction) {
+    if (projects.length < 2) return
+    setActiveProject((current) => (current + direction + projects.length) % projects.length)
+  }
+
+  function closeMenu() {
+    setMenuOpen(false)
+  }
+
+  const selectedProject = projects.length
+    ? projects[activeProject % projects.length]
+    : null
 
   return (
-    <div
-      className="portfolio-root"
-      dangerouslySetInnerHTML={{ __html: bodyMatch[1] }}
-    />
+    <div className="portfolio-root">
+      <div className="scanlines" aria-hidden="true" />
+      <header className="site-header">
+        <div className="header-left">
+          <a className="brand" href="#inicio" aria-label="Ir al inicio">
+            <span className="brand-mark" aria-hidden="true">{brandMark}</span>
+            <span className="brand-name">Deg<span className="cursor">_</span></span>
+          </a>
+          <button
+            id="theme-toggle"
+            className="theme-toggle"
+            type="button"
+            aria-label={theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'}
+            aria-pressed={theme === 'dark'}
+            title={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+            onClick={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')}
+          >
+            <span className="theme-icon" aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
+            <span className="theme-label">{theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}</span>
+          </button>
+        </div>
+        <button
+          className="menu-toggle"
+          type="button"
+          aria-expanded={menuOpen}
+          aria-controls="site-nav"
+          onClick={() => setMenuOpen((current) => !current)}
+        >
+          MENU
+        </button>
+        <nav id="site-nav" className={`site-nav${menuOpen ? ' is-open' : ''}`} aria-label="Navegación principal">
+          <a href="#proyectos" onClick={closeMenu}>Proyectos</a>
+          <a href="#stack" onClick={closeMenu}>Stack</a>
+          <a href="#sobre-mi" onClick={closeMenu}>Sobre mí</a>
+          <a className="github-button" href="https://github.com/" target="_blank" rel="noreferrer" aria-label="Visitar GitHub de Deg" title="GitHub de Deg" onClick={closeMenu}>
+            <svg className="github-logo" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 1.5a10.5 10.5 0 0 0-3.32 20.46c.53.1.72-.23.72-.5v-1.8c-2.93.64-3.55-1.25-3.55-1.25-.48-1.22-1.17-1.55-1.17-1.55-.96-.66.07-.65.07-.65 1.06.08 1.62 1.09 1.62 1.09.94 1.61 2.46 1.14 3.06.87.1-.68.37-1.14.67-1.4-2.34-.27-4.8-1.17-4.8-5.2 0-1.15.41-2.09 1.08-2.83-.11-.27-.47-1.34.1-2.79 0 0 .88-.28 2.89 1.08A10 10 0 0 1 12 6.7a10 10 0 0 1 2.63.36c2-.136 2.88-1.08 2.88-1.08.57 1.45.21 2.52.1 2.79.68.74 1.09 1.68 1.09 2.83 0 4.04-2.47 4.92-4.82 5.19.38.33.72.97.72 1.96v2.9c0 .27.19.6.73.5A10.5 10.5 0 0 0 12 1.5Z" />
+            </svg>
+            <span>GitHub</span>
+          </a>
+        </nav>
+      </header>
+
+      <main>
+        <section id="inicio" className="hero section-shell">
+          <div className="hero-copy reveal">
+            <p className="eyebrow"><span className="status-dot" />Disponible para proyectos</p>
+            <h1>Desarrollo web full stack: <em>frontend atractivo y backend eficiente.</em></h1>
+            <p className="hero-intro">Desarrollador full stack enfocado en crear productos claros, veloces y con personalidad. Código limpio, ideas grandes.</p>
+            <div className="hero-actions">
+              <a className="button button-primary" href="#proyectos">Ver proyectos <span aria-hidden="true">-&gt;</span></a>
+              <a className="button button-ghost" href="#contacto">Contáctame</a>
+            </div>
+            <div className="hero-meta">
+              <span><strong>02+</strong> años creando<br />sitios web responsive</span>
+              <span><strong>03</strong> proyectos lanzados</span>
+            </div>
+          </div>
+          <div className="hero-console reveal" aria-label="Perfil de desarrollador">
+            <div className="console-top"><span>PROFILE.exe</span><span>■ ■ ■</span></div>
+            <div className="avatar-stage">
+              <div className="code-screen" aria-hidden="true"><span>const deg = {'{'}</span><span>  coffee: true,</span><span>  code: 'ready'</span><span>{'};'}</span></div>
+              <div className="pixel-avatar" aria-hidden="true">
+                <i className="hair" /><i className="face" /><i className="neck" />
+                <i className="eye eye-left" /><i className="eye eye-right" /><i className="mouth" />
+                <i className="shirt" /><i className="typing-hand" /><i className="coffee-cup" /><i className="coffee-steam" />
+              </div>
+              <div className="pixel-desk" aria-hidden="true"><span className="keyboard" /><span className="desk-line" /></div>
+              <div className="level-badge">LVL 04</div>
+            </div>
+            <div className="console-info"><span>PLAYER_01</span><strong>FULL-STACK<br />DEVELOPER</strong></div>
+            <div className="xp-label"><span>EXPERIENCIA</span><span>84%</span></div>
+            <div className="xp-bar"><span /></div>
+            <div className="console-bottom"><span>STATUS: ONLINE</span><span>///</span></div>
+          </div>
+        </section>
+
+        <section id="proyectos" className="projects section-shell">
+          <div className="section-heading reveal">
+            <div><p className="eyebrow">01 / trabajo seleccionado</p><h2>Proyectos <span>destacados</span></h2></div>
+            <button id="open-project-form" className="text-button" type="button" onClick={openProjectForm}>+ Cargar proyecto</button>
+          </div>
+          <div className="project-viewer reveal">
+            <div id="project-track" className="project-track">
+              {selectedProject ? (
+                <article className="project-card">
+                  <div className="project-preview">
+                    {selectedProject.demo ? (
+                      <>
+                        <iframe
+                          src={selectedProject.demo}
+                          title={`Vista previa del proyecto ${selectedProject.name}`}
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          sandbox="allow-forms allow-popups allow-scripts allow-same-origin"
+                        />
+                        <span className="preview-domain">{new URL(selectedProject.demo).hostname}</span>
+                        <ProjectLink className="preview-open-link" href={selectedProject.demo}>Abrir sitio</ProjectLink>
+                      </>
+                    ) : selectedProject.repository ? (
+                      <ProjectLink className="repository-preview" href={selectedProject.repository}>⌘  Ver repositorio en GitHub</ProjectLink>
+                    ) : null}
+                  </div>
+                  <div className="project-details">
+                    <span className="project-category">{selectedProject.category}</span>
+                    <h3>{selectedProject.name}</h3>
+                    <p>{selectedProject.description}</p>
+                    <div className="project-links">
+                      {selectedProject.repository && <ProjectLink href={selectedProject.repository}>Ver código en GitHub</ProjectLink>}
+                      {selectedProject.demo && <ProjectLink href={selectedProject.demo}>Ver proyecto en vivo</ProjectLink>}
+                    </div>
+                  </div>
+                </article>
+              ) : (
+                <p className="project-empty">{loadError || 'Aún no hay proyectos. Usa + Cargar proyecto para agregar el primero.'}</p>
+              )}
+            </div>
+            <div className="slider-controls">
+              <div id="project-dots" className="project-dots" aria-label="Seleccionar proyecto">
+                {projects.map((project, index) => (
+                  <button
+                    key={`${project.name}-${index}`}
+                    type="button"
+                    aria-label={`Mostrar proyecto ${index + 1}: ${project.name}`}
+                    aria-current={index === activeProject}
+                    onClick={() => setActiveProject(index)}
+                  />
+                ))}
+              </div>
+              <div className="arrow-controls">
+                <button id="prev-project" className="icon-button" type="button" aria-label="Proyecto anterior" disabled={projects.length < 2} onClick={() => changeProject(-1)}>&#8592;</button>
+                <button id="next-project" className="icon-button" type="button" aria-label="Siguiente proyecto" disabled={projects.length < 2} onClick={() => changeProject(1)}>&#8594;</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="stack" className="stack section-shell">
+          <div className="section-heading reveal"><div><p className="eyebrow">02 / herramientas</p><h2>Mi <span>stack</span></h2></div></div>
+          <div className="stack-grid reveal">
+            <article className="skill-item" style={{ '--skill': '95%' }}><div className="skill-icon js-icon">JS</div><div><h3>JavaScript</h3><p>Interacciones y lógica</p></div><span className="skill-level">95%</span></article>
+            <article className="skill-item" style={{ '--skill': '98%' }}><div className="skill-icon">&lt;/&gt;</div><div><h3>HTML + CSS</h3><p>Interfaces responsive</p></div><span className="skill-level">100%</span></article>
+            <article className="skill-item" style={{ '--skill': '88%' }}><div className="skill-icon bootstrap-icon">B</div><div><h3>Bootstrap</h3><p>Sistemas y prototipos</p></div><span className="skill-level">100%</span></article>
+            <article className="skill-item" style={{ '--skill': '82%' }}><div className="skill-icon python-icon">Py</div><div><h3>Python</h3><p>Automatización y datos</p></div><span className="skill-level">92%</span></article>
+            <article className="skill-item skill-item-java" style={{ '--skill': '90%' }}><div className="skill-icon java-icon">J</div><div><h3>Java</h3><p>Desarrollo backend</p></div><span className="skill-level">90%</span></article>
+            <article className="skill-item" style={{ '--skill': '80%' }}><div className="skill-icon react-icon">R</div><div><h3>React</h3><p>Interfaces y componentes</p></div><span className="skill-level">80%</span></article>
+            <article className="skill-item" style={{ '--skill': '90%' }}><div className="skill-icon github-icon">GH</div><div><h3>GitHub</h3><p>Control de versiones y colaboración</p></div><span className="skill-level">90%</span></article>
+            <article className="skill-item" style={{ '--skill': '80%' }}><div className="skill-icon netlify-icon">N</div><div><h3>Netlify</h3><p>Despliegue de sitios web</p></div><span className="skill-level">80%</span></article>
+          </div>
+        </section>
+
+        <section id="sobre-mi" className="about section-shell">
+          <div className="about-copy reveal">
+            <p className="eyebrow">03 / el jugador y el desarrollador</p>
+            <h2>Código con <span>intención.</span></h2>
+            <p>Creo proyectos web full stack de principio a fin: interfaces frontend, APIs y backend listos para funcionar.</p>
+            <div className="about-tags"><span>Inteligencia artificial</span><span>Desarrollo web full stack</span><span>Aprendizaje continuo</span></div>
+          </div>
+          <div className="quote-box reveal"><span className="quote-mark">“</span><p>Si puedes crear una idea por más descabellada que suene, hazla realidad.</p><span className="quote-author">— Deg</span></div>
+        </section>
+
+        <section id="contacto" className="contact section-shell reveal">
+          <p className="eyebrow">04 / siguiente nivel</p>
+          <h2>Hagamos algo <span>memorable.</span></h2>
+          <p>Tu próxima idea merece una buena partida. Cuéntame qué tienes en mente y lo desarrollamos.</p>
+          <a className="button button-primary" href="mailto:hola@deg.dev">hola@deg.dev <span aria-hidden="true">-&gt;</span></a>
+        </section>
+      </main>
+
+      <footer className="site-footer section-shell">
+        <span>© 2026 DEG</span><span>HECHO CON <b>☕</b> Y BUEN CÓDIGO</span><a href="#inicio">VOLVER ARRIBA ↑</a>
+      </footer>
+
+      <dialog
+        id="project-dialog"
+        ref={dialogRef}
+        className="project-dialog"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) dialogRef.current?.close()
+        }}
+      >
+        <form id="project-form" noValidate onSubmit={handleProjectSubmit}>
+          <button id="close-project-form" className="dialog-close" type="button" aria-label="Cerrar" onClick={() => dialogRef.current?.close()}>×</button>
+          <p className="eyebrow">Nuevo proyecto</p>
+          <h2>Agrega una nueva <span>partida.</span></h2>
+          <label>Nombre<input id="project-name" name="project-name" value={formData.name} onChange={updateFormField} required maxLength={38} placeholder="Ej. Tienda Pixel" /></label>
+          <label>Descripción
+            <textarea id="project-description" name="project-description" value={formData.description} onChange={updateFormField} required maxLength={500} rows={4} placeholder="Describe el proyecto, sus funciones y tecnologías..." />
+            <span id="description-counter" className="description-counter" aria-live="polite">{formData.description.length} / 500 caracteres</span>
+          </label>
+          <label>Categoría
+            <select id="project-category" name="project-category" value={formData.category} onChange={updateFormField} required>
+              <option value="" disabled>Selecciona una categoría</option><option value="Web">Web</option><option value="Web App">Web App</option>
+            </select>
+          </label>
+          <label>Repositorio GitHub<input id="project-repository" name="project-repository" value={formData.repository} onChange={updateFormField} type="text" inputMode="url" placeholder="github.com/usuario/proyecto" /></label>
+          <label>Proyecto desplegado en Netlify<input id="project-demo" name="project-demo" value={formData.demo} onChange={updateFormField} type="text" inputMode="url" placeholder="mi-proyecto.netlify.app" /></label>
+          {formError && <p id="project-form-error" className="form-message" role="alert">{formError}</p>}
+          <button className="button button-primary" type="submit">Guardar proyecto <span aria-hidden="true">-&gt;</span></button>
+        </form>
+      </dialog>
+    </div>
   )
 }
 
