@@ -1201,6 +1201,12 @@ input:focus-visible {
   line-height: 1.7;
 }
 
+.gmail-icon {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+}
+
 .site-footer {
   display: flex;
   min-height: 68px;
@@ -1208,9 +1214,16 @@ input:focus-visible {
   justify-content: space-between;
   gap: 16px;
   border-top: 1px solid var(--line);
-  color: var(--muted);
+  color: var(--ink);
   font-family: var(--pixel-font);
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.footer-copyright strong,
+.footer-credit strong {
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .site-footer b {
@@ -1219,6 +1232,7 @@ input:focus-visible {
 
 .site-footer a {
   color: var(--ink);
+  font-weight: 700;
 }
 
 .site-footer a:hover {
@@ -1559,7 +1573,7 @@ input:focus-visible {
     flex-wrap: wrap;
     justify-content: space-between;
     padding-block: 17px;
-    font-size: 9px;
+    font-size: 11px;
   }
 
   .site-footer span:nth-child(2) {
