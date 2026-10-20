@@ -1,16 +1,31 @@
-# React + Vite
+# Portafolio de Deg
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Portafolio estático creado con Astro y React. Astro genera la página y sus metadatos en el servidor; React mantiene la interactividad del tema, el menú y los proyectos.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js 22.22.0 o superior.
+- npm.
 
-## React Compiler
+## Desarrollo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```sh
+npm install
+npm run dev
+```
 
-## Expanding the Oxlint configuration
+Astro muestra la URL local en la terminal, normalmente `http://localhost:4321`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Producción
+
+```sh
+npm run build
+npm run preview
+```
+
+## Verificaciones
+
+```sh
+npm run lint
+npm run build
+```

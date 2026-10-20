@@ -118,15 +118,24 @@ function ProjectLink({ href, className, children }) {
 
 function App() {
   const dialogRef = useRef(null)
-  const [storedProjectData] = useState(readStoredProjects)
-  const [theme, setTheme] = useState(readStoredTheme)
+  const hasInitializedTheme = useRef(false)
+  const [theme, setTheme] = useState('light')
   const [brandMark, setBrandMark] = useState('</>')
   const [menuOpen, setMenuOpen] = useState(false)
-  const [projects, setProjects] = useState(storedProjectData.projects)
+  const [projects, setProjects] = useState([])
   const [activeProject, setActiveProject] = useState(0)
-  const [loadError, setLoadError] = useState(storedProjectData.error)
+  const [loadError, setLoadError] = useState('')
   const [formError, setFormError] = useState('')
   const [formData, setFormData] = useState(initialProjectForm)
+
+  // Persisted browser preferences can only be read after Astro has rendered the page.
+  useEffect(() => {
+    const storedProjectData = readStoredProjects()
+    // eslint-disable-next-line react/set-state-in-effect -- Hydrate local storage after SSR.
+    setProjects(storedProjectData.projects)
+    setLoadError(storedProjectData.error)
+    setTheme(readStoredTheme())
+  }, [])
 
   useEffect(() => {
     const root = document.documentElement
@@ -135,10 +144,14 @@ function App() {
     const themeColor = document.querySelector('meta[name="theme-color"]')
     if (themeColor) themeColor.content = theme === 'dark' ? '#151b26' : '#f6e5e3'
 
-    try {
-      localStorage.setItem(themeStorageKey, theme)
-    } catch (error) {
-      console.error('No se pudo guardar la preferencia de tema.', error)
+    if (hasInitializedTheme.current) {
+      try {
+        localStorage.setItem(themeStorageKey, theme)
+      } catch (error) {
+        console.error('No se pudo guardar la preferencia de tema.', error)
+      }
+    } else {
+      hasInitializedTheme.current = true
     }
 
     return () => root.classList.remove('theme-ready')
