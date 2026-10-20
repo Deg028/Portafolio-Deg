@@ -133,7 +133,7 @@ function App() {
     root.dataset.theme = theme
     root.classList.add('theme-ready')
     const themeColor = document.querySelector('meta[name="theme-color"]')
-    if (themeColor) themeColor.content = theme === 'dark' ? '#171827' : '#f4f2e9'
+    if (themeColor) themeColor.content = theme === 'dark' ? '#151b26' : '#f6e5e3'
 
     try {
       localStorage.setItem(themeStorageKey, theme)
