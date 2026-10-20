@@ -359,7 +359,6 @@ function App() {
                           referrerPolicy="no-referrer"
                           sandbox="allow-forms allow-popups allow-scripts allow-same-origin"
                         />
-                        <span className="preview-domain">{new URL(selectedProject.demo).hostname}</span>
                         <ProjectLink className="preview-open-link" href={selectedProject.demo}>Abrir sitio</ProjectLink>
                       </>
                     ) : selectedProject.repository ? (
