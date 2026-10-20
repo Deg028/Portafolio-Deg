@@ -142,6 +142,85 @@ input:focus-visible {
   );
 }
 
+.retro-loader {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--bg);
+  opacity: 1;
+  transition: opacity 260ms ease;
+}
+
+.retro-loader.is-exiting {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.retro-loader-panel {
+  width: min(100%, 360px);
+  padding: 30px;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.retro-loader-mark {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  place-items: center;
+  border: 2px solid var(--ink);
+  background: var(--lime);
+  color: var(--lime-ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.retro-loader-title,
+.retro-loader-message {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.retro-loader-title {
+  margin-bottom: 20px;
+}
+
+.retro-loader-message {
+  margin-top: 12px;
+  color: var(--purple-dark);
+  font-size: 11px;
+}
+
+.retro-loader-track {
+  height: 14px;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  background: var(--line);
+}
+
+.retro-loader-track span {
+  display: block;
+  width: 38%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--purple) 0,
+    var(--purple) 12px,
+    transparent 12px,
+    transparent 16px
+  );
+  animation: loader-scan 760ms steps(6, end) infinite alternate;
+}
+
 .site-header {
   position: sticky;
   z-index: 20;
@@ -1271,6 +1350,12 @@ input:focus-visible {
 @keyframes cursor-blink {
   to {
     visibility: hidden;
+  }
+}
+
+@keyframes loader-scan {
+  to {
+    transform: translateX(165%);
   }
 }
 

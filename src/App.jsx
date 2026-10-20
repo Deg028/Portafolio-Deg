@@ -121,6 +121,9 @@ function App() {
   const hasInitializedTheme = useRef(false)
   const [theme, setTheme] = useState('light')
   const [brandMark, setBrandMark] = useState('</>')
+  const [bootVisible, setBootVisible] = useState(true)
+  const [bootReady, setBootReady] = useState(false)
+  const [bootExiting, setBootExiting] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [projects, setProjects] = useState([])
   const [activeProject, setActiveProject] = useState(0)
@@ -135,6 +138,24 @@ function App() {
     setProjects(storedProjectData.projects)
     setLoadError(storedProjectData.error)
     setTheme(readStoredTheme())
+  }, [])
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // eslint-disable-next-line react/set-state-in-effect -- Skip the boot animation when requested.
+      setBootVisible(false)
+      return undefined
+    }
+
+    const readyTimer = window.setTimeout(() => setBootReady(true), 600)
+    const exitTimer = window.setTimeout(() => setBootExiting(true), 720)
+    const removeTimer = window.setTimeout(() => setBootVisible(false), 1_000)
+
+    return () => {
+      window.clearTimeout(readyTimer)
+      window.clearTimeout(exitTimer)
+      window.clearTimeout(removeTimer)
+    }
   }, [])
 
   useEffect(() => {
@@ -264,6 +285,24 @@ function App() {
 
   return (
     <div className="portfolio-root">
+      {bootVisible && (
+        <div
+          className={`retro-loader${bootExiting ? ' is-exiting' : ''}`}
+          role="status"
+          aria-live="polite"
+        >
+          <div className="retro-loader-panel">
+            <span className="retro-loader-mark" aria-hidden="true">&lt;/&gt;</span>
+            <p className="retro-loader-title">DEG // PORTAFOLIO</p>
+            <div className="retro-loader-track" aria-hidden="true">
+              <span />
+            </div>
+            <p className="retro-loader-message">
+              {bootReady ? 'SISTEMA LISTO' : 'CARGANDO INTERFAZ...'}
+            </p>
+          </div>
+        </div>
+      )}
       <div className="scanlines" aria-hidden="true" />
       <header className="site-header">
         <div className="header-left">
