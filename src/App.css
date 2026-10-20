@@ -2,7 +2,6 @@
   color-scheme: light;
   --bg: #f6e5e3;
   --surface: #fff7f5;
-  --surface-strong: #fffaf8;
   --ink: #182235;
   --muted: #5e6878;
   --line: #e4c9c6;
@@ -27,7 +26,6 @@
   color-scheme: dark;
   --bg: #151b26;
   --surface: #202a38;
-  --surface-strong: #263244;
   --ink: #f7f4ef;
   --muted: #b8c0cb;
   --line: #394657;
@@ -760,25 +758,11 @@ input:focus-visible {
 
 .section-heading h2 span,
 .about h2 span,
-.contact h2 span,
-.project-dialog h2 span {
+.contact h2 span {
   color: var(--purple);
   font-family: var(--display-font);
   font-weight: 600;
   letter-spacing: -0.015em;
-}
-
-.text-button {
-  padding: 10px 0;
-  border: 0;
-  border-bottom: 2px solid var(--purple);
-  background: transparent;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.text-button:hover {
-  color: var(--purple-dark);
 }
 
 .project-viewer {
@@ -793,18 +777,6 @@ input:focus-visible {
   min-height: 210px;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
   gap: 18px;
-}
-
-.project-track:empty::before {
-  display: grid;
-  min-height: 210px;
-  place-items: center;
-  color: var(--muted);
-  content: "Aun no hay proyectos. Usa + Cargar proyecto para agregar el primero.";
-  font-family: var(--body-font);
-  font-size: 14px;
-  font-weight: 500;
-  text-align: center;
 }
 
 .project-track > * {
@@ -1239,128 +1211,6 @@ input:focus-visible {
   color: var(--purple);
 }
 
-.project-dialog {
-  width: min(520px, calc(100% - 32px));
-  max-height: min(90vh, 760px);
-  padding: 30px;
-  overflow: auto;
-  border: 3px solid var(--ink);
-  background: var(--surface);
-  box-shadow: 9px 9px 0 var(--ink);
-  color: var(--ink);
-}
-
-.project-dialog::backdrop {
-  background: rgb(18 28 43 / 76%);
-  backdrop-filter: blur(3px);
-}
-
-.project-dialog form {
-  position: relative;
-  display: grid;
-  gap: 15px;
-}
-
-.project-dialog .eyebrow {
-  margin: 0;
-}
-
-.project-dialog h2 {
-  margin: 0 30px 5px 0;
-  font-size: 25px;
-  font-weight: 700;
-  letter-spacing: -0.045em;
-  line-height: 1.18;
-}
-
-.project-dialog label {
-  position: relative;
-  display: grid;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.project-dialog input,
-.project-dialog select,
-.project-dialog textarea {
-  width: 100%;
-  min-height: 43px;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: 0;
-  background: var(--surface-strong);
-  color: var(--ink);
-  font-size: 15px;
-}
-
-.project-dialog textarea {
-  min-height: 120px;
-  max-height: 320px;
-  padding-bottom: 32px;
-  resize: vertical;
-  line-height: 1.5;
-}
-
-.project-dialog input::placeholder,
-.project-dialog textarea::placeholder {
-  color: #9293a0;
-}
-
-.description-counter {
-  position: sticky;
-  z-index: 1;
-  right: 8px;
-  bottom: 8px;
-  justify-self: end;
-  width: fit-content;
-  margin-top: -29px;
-  margin-right: 9px;
-  padding: 2px 5px;
-  background: var(--surface-strong);
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 500;
-  pointer-events: none;
-}
-
-.form-message {
-  margin: 0;
-  color: #b42318;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-:root[data-theme="dark"] .form-message {
-  color: #ff9a91;
-}
-
-.project-dialog .button {
-  justify-self: start;
-  margin-top: 6px;
-}
-
-.dialog-close {
-  position: absolute;
-  top: -9px;
-  right: -8px;
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border: 2px solid var(--ink);
-  background: var(--lime);
-  color: var(--lime-ink);
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.dialog-close:hover {
-  background: var(--purple);
-  color: #fff;
-}
-
 @keyframes cursor-blink {
   to {
     visibility: hidden;
@@ -1582,9 +1432,6 @@ input:focus-visible {
     text-align: center;
   }
 
-  .project-dialog {
-    padding: 25px 20px;
-  }
 }
 
 @media (max-width: 380px) {

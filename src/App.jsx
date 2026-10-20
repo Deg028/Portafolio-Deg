@@ -1,103 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import projects from './data/projects.js'
 import './App.css'
 
-const projectStorageKey = 'deg-portfolio-projects'
 const themeStorageKey = 'deg-portfolio-theme'
 const codeSymbols = ['</>', '{ }', '[ ]', '=>', '01', '!=', '&&']
-const initialProjectForm = {
-  name: '',
-  description: '',
-  category: '',
-  repository: '',
-  demo: '',
-}
-
-function normalizeUrl(value) {
-  const trimmedValue = value.trim()
-  if (!trimmedValue) return null
-
-  try {
-    const url = new URL(
-      /^[a-z][a-z\d+.-]*:/i.test(trimmedValue)
-        ? trimmedValue
-        : `https://${trimmedValue}`,
-    )
-    if (url.protocol !== 'https:' && url.protocol !== 'http:') return null
-    return url.href
-  } catch {
-    return null
-  }
-}
-
-function isGitHubRepository(url) {
-  if (!url) return false
-  const parsedUrl = new URL(url)
-  return (
-    parsedUrl.hostname === 'github.com' &&
-    parsedUrl.pathname.split('/').filter(Boolean).length >= 2
-  )
-}
-
-function isNetlifySite(url) {
-  if (!url) return false
-  const hostname = new URL(url).hostname
-  return hostname.endsWith('.netlify.app') && hostname.split('.').length >= 3
-}
-
-function isValidProject(project) {
-  if (
-    !project ||
-    typeof project.name !== 'string' ||
-    !project.name.trim() ||
-    typeof project.description !== 'string' ||
-    !project.description.trim() ||
-    typeof project.category !== 'string' ||
-    !project.category.trim() ||
-    (project.repository !== null && typeof project.repository !== 'string') ||
-    (project.demo !== null && typeof project.demo !== 'string')
-  ) {
-    return false
-  }
-
-  const repository = project.repository ? normalizeUrl(project.repository) : null
-  const demo = project.demo ? normalizeUrl(project.demo) : null
-  return (
-    (repository || demo) &&
-    (!project.repository || isGitHubRepository(repository)) &&
-    (!project.demo || isNetlifySite(demo))
-  )
-}
-
-function readStoredProjects() {
-  let savedProjects
-  try {
-    savedProjects = localStorage.getItem(projectStorageKey)
-  } catch (error) {
-    console.error('No se pudieron leer los proyectos guardados.', error)
-    return { projects: [], error: 'No se pudieron leer los proyectos guardados.' }
-  }
-
-  if (!savedProjects) return { projects: [], error: '' }
-
-  try {
-    const parsedProjects = JSON.parse(savedProjects)
-    if (!Array.isArray(parsedProjects) || !parsedProjects.every(isValidProject)) {
-      throw new TypeError('El formato de los proyectos guardados no es válido.')
-    }
-
-    return {
-      projects: parsedProjects.map((project) => ({
-        ...project,
-        repository: project.repository ? normalizeUrl(project.repository) : null,
-        demo: project.demo ? normalizeUrl(project.demo) : null,
-      })),
-      error: '',
-    }
-  } catch (error) {
-    console.error('No se pudieron cargar los proyectos guardados.', error)
-    return { projects: [], error: 'No se pudieron cargar los proyectos guardados.' }
-  }
-}
 
 function readStoredTheme() {
   try {
@@ -117,7 +23,6 @@ function ProjectLink({ href, className, children }) {
 }
 
 function App() {
-  const dialogRef = useRef(null)
   const hasInitializedTheme = useRef(false)
   const [theme, setTheme] = useState('light')
   const [brandMark, setBrandMark] = useState('</>')
@@ -125,18 +30,11 @@ function App() {
   const [bootReady, setBootReady] = useState(false)
   const [bootExiting, setBootExiting] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [projects, setProjects] = useState([])
   const [activeProject, setActiveProject] = useState(0)
-  const [loadError, setLoadError] = useState('')
-  const [formError, setFormError] = useState('')
-  const [formData, setFormData] = useState(initialProjectForm)
 
-  // Persisted browser preferences can only be read after Astro has rendered the page.
   useEffect(() => {
-    const storedProjectData = readStoredProjects()
+    // Theme preference is only available after Astro has rendered the page.
     // eslint-disable-next-line react/set-state-in-effect -- Hydrate local storage after SSR.
-    setProjects(storedProjectData.projects)
-    setLoadError(storedProjectData.error)
     setTheme(readStoredTheme())
   }, [])
 
@@ -188,87 +86,6 @@ function App() {
 
     return () => window.clearInterval(intervalId)
   }, [])
-
-  function saveProjects(updatedProjects) {
-    try {
-      localStorage.setItem(projectStorageKey, JSON.stringify(updatedProjects))
-      setLoadError('')
-      return true
-    } catch (error) {
-      console.error('No se pudo guardar el proyecto.', error)
-      setFormError('No se pudo guardar el proyecto en este navegador. Inténtalo de nuevo.')
-      return false
-    }
-  }
-
-  function handleProjectSubmit(event) {
-    event.preventDefault()
-    setFormError('')
-
-    if (!formData.name.trim()) {
-      setFormError('El nombre del proyecto es obligatorio.')
-      return
-    }
-    if (!formData.description.trim()) {
-      setFormError('La descripción del proyecto es obligatoria.')
-      return
-    }
-    if (!formData.category) {
-      setFormError('Selecciona una categoría para el proyecto.')
-      return
-    }
-
-    const repositoryText = formData.repository.trim()
-    const demoText = formData.demo.trim()
-    const repository = repositoryText ? normalizeUrl(repositoryText) : null
-    const demo = demoText ? normalizeUrl(demoText) : null
-
-    if (!repositoryText && !demoText) {
-      setFormError('Agrega al menos un enlace válido de GitHub o Netlify.')
-      return
-    }
-    if (repositoryText && !isGitHubRepository(repository)) {
-      setFormError('Ingresa el enlace de un repositorio válido de github.com.')
-      return
-    }
-    if (demoText && !isNetlifySite(demo)) {
-      setFormError('Ingresa un enlace válido de un sitio publicado en netlify.app.')
-      return
-    }
-
-    const newProject = {
-      name: formData.name.trim(),
-      description: formData.description.trim(),
-      category: formData.category,
-      repository,
-      demo,
-    }
-    const updatedProjects = [...projects, newProject]
-    if (!saveProjects(updatedProjects)) return
-
-    setProjects(updatedProjects)
-    setActiveProject(updatedProjects.length - 1)
-    setFormData(initialProjectForm)
-    dialogRef.current?.close()
-  }
-
-  function openProjectForm() {
-    setFormError('')
-    dialogRef.current?.showModal()
-  }
-
-  function updateFormField(event) {
-    const { name, value } = event.target
-    const formFieldNames = {
-      'project-name': 'name',
-      'project-description': 'description',
-      'project-category': 'category',
-      'project-repository': 'repository',
-      'project-demo': 'demo',
-    }
-    const fieldName = formFieldNames[name]
-    setFormData((current) => ({ ...current, [fieldName]: value }))
-  }
 
   function changeProject(direction) {
     if (projects.length < 2) return
@@ -382,7 +199,6 @@ function App() {
         <section id="proyectos" className="projects section-shell">
           <div className="section-heading reveal">
             <div><p className="eyebrow">01 / trabajo seleccionado</p><h2>Proyectos <span>destacados</span></h2></div>
-            <button id="open-project-form" className="text-button" type="button" onClick={openProjectForm}>+ Cargar proyecto</button>
           </div>
           <div className="project-viewer reveal">
             <div id="project-track" className="project-track">
@@ -415,7 +231,7 @@ function App() {
                   </div>
                 </article>
               ) : (
-                <p className="project-empty">{loadError || 'Aún no hay proyectos. Usa + Cargar proyecto para agregar el primero.'}</p>
+                <p className="project-empty">Aún no hay proyectos publicados. Agrega tus proyectos al catálogo para que aparezcan aquí para todos.</p>
               )}
             </div>
             <div className="slider-controls">
@@ -486,34 +302,6 @@ function App() {
         <a href="#inicio">VOLVER ARRIBA ↑</a>
       </footer>
 
-      <dialog
-        id="project-dialog"
-        ref={dialogRef}
-        className="project-dialog"
-        onClick={(event) => {
-          if (event.target === event.currentTarget) dialogRef.current?.close()
-        }}
-      >
-        <form id="project-form" noValidate onSubmit={handleProjectSubmit}>
-          <button id="close-project-form" className="dialog-close" type="button" aria-label="Cerrar" onClick={() => dialogRef.current?.close()}>×</button>
-          <p className="eyebrow">Nuevo proyecto</p>
-          <h2>Agrega una nueva <span>partida.</span></h2>
-          <label>Nombre<input id="project-name" name="project-name" value={formData.name} onChange={updateFormField} required maxLength={38} placeholder="Ej. Tienda Pixel" /></label>
-          <label>Descripción
-            <textarea id="project-description" name="project-description" value={formData.description} onChange={updateFormField} required maxLength={500} rows={4} placeholder="Describe el proyecto, sus funciones y tecnologías..." />
-            <span id="description-counter" className="description-counter" aria-live="polite">{formData.description.length} / 500 caracteres</span>
-          </label>
-          <label>Categoría
-            <select id="project-category" name="project-category" value={formData.category} onChange={updateFormField} required>
-              <option value="" disabled>Selecciona una categoría</option><option value="Web">Web</option><option value="Web App">Web App</option>
-            </select>
-          </label>
-          <label>Repositorio GitHub<input id="project-repository" name="project-repository" value={formData.repository} onChange={updateFormField} type="text" inputMode="url" placeholder="github.com/usuario/proyecto" /></label>
-          <label>Proyecto desplegado en Netlify<input id="project-demo" name="project-demo" value={formData.demo} onChange={updateFormField} type="text" inputMode="url" placeholder="mi-proyecto.netlify.app" /></label>
-          {formError && <p id="project-form-error" className="form-message" role="alert">{formError}</p>}
-          <button className="button button-primary" type="submit">Guardar proyecto <span aria-hidden="true">-&gt;</span></button>
-        </form>
-      </dialog>
     </div>
   )
 }
