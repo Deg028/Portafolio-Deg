@@ -1,0 +1,23 @@
+{
+  "inputs": [
+    {
+      "id": "stitch-api-key",
+      "type": "promptString",
+      "description": "Google Stitch API key",
+      "password": true
+    }
+  ],
+  "servers": {
+    "stitch": {
+      "type": "http",
+      "url": "https://stitch.googleapis.com/mcp",
+      "headers": {
+        "X-Goog-Api-Key": "${input:stitch-api-key}"
+      }
+    },
+    "figma": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp"
+    }
+  }
+}
