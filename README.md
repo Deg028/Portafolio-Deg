@@ -1,6 +1,6 @@
 # Portafolio de Deg
 
-Portafolio estático creado con Astro y React. Astro genera la página y sus metadatos; React mantiene la interactividad del tema, el menú y la navegación de proyectos.
+Portafolio estático creado con Astro y React. Astro genera toda la página en HTML estático; el tema y el menú usan un script pequeño sin React, y React solo se usa en la vista previa de cada proyecto (`src/components/ProjectPreview.jsx`). Si el JS falla, el contenido y los enlaces siguen funcionando.
 
 ## Requisitos
 
@@ -44,6 +44,7 @@ El catálogo compartido vive en `src/data/projects.js`. Los proyectos incluidos 
        name: 'Nombre de mi proyecto',
        description: 'Qué hace el proyecto y qué parte desarrollé.',
        category: 'Web App',
+       tags: ['Astro', 'React'], // opcional
        repository: 'https://github.com/mi-usuario/mi-repositorio',
        demo: 'https://mi-proyecto.netlify.app',
      },
@@ -70,7 +71,11 @@ El catálogo compartido vive en `src/data/projects.js`. Los proyectos incluidos 
 
 6. Confirma que el despliegue termine en la plataforma de hosting. Si está configurada para publicar los cambios de `main`, el `push` iniciará el despliegue automáticamente; de lo contrario, tendrás que iniciarlo desde esa plataforma.
 
-La tarjeta muestra el sitio dentro de una vista previa cuando se proporciona `demo`. Algunos sitios bloquean esa presentación en un marco; en ese caso, el enlace permite abrirlos directamente. Los proyectos guardados anteriormente en el navegador no se transfieren al catálogo y deben agregarse aquí.
+Cada proyecto se muestra como una tarjeta con pestañas de vista previa: **Sitio** (el iframe se carga al pulsar «Cargar vista previa», para no frenar la página) y **Repositorio** (imagen que GitHub genera para el repo). Algunos sitios bloquean el iframe; en ese caso los enlaces de la tarjeta abren el sitio directamente.
+
+## Habilidades
+
+Los niveles (Básico, Intermedio, Avanzado) se editan en `src/data/skills.js` con `level: 1`, `2` o `3`.
 
 ## Conectar un CMS más adelante
 

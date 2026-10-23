@@ -1,0 +1,49 @@
+---
+import '../styles/global.css'
+
+const { title, description } = Astro.props
+---
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Deg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="theme-color" content="#f6e5e3" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+    <!-- Se ejecuta antes de pintar: evita el destello de tema y activa los estilos que requieren JS. -->
+    <script is:inline>
+      (function () {
+        var root = document.documentElement
+        root.classList.replace('no-js', 'js')
+        var theme = null
+        try {
+          theme = localStorage.getItem('deg-portfolio-theme')
+          if (sessionStorage.getItem('deg-loader-seen')) root.classList.add('skip-loader')
+          sessionStorage.setItem('deg-loader-seen', '1')
+        } catch (error) {}
+        if (theme !== 'dark' && theme !== 'light') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        root.dataset.theme = theme
+      })()
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

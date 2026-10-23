@@ -1,0 +1,38 @@
+---
+import projects from '../data/projects.js'
+
+const projectCount = String(projects.length).padStart(2, '0')
+---
+
+<section id="inicio" class="hero section-shell">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="status-dot"></span>Disponible para proyectos</p>
+    <h1>Desarrollo web full stack: <em>frontend atractivo y backend eficiente.</em></h1>
+    <p class="hero-intro">Desarrollador full stack enfocado en crear productos claros, veloces y con personalidad. Código limpio, ideas grandes.</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="#proyectos">Ver proyectos <span aria-hidden="true">-&gt;</span></a>
+      <a class="button button-ghost" href="#contacto">Contáctame</a>
+    </div>
+    <div class="hero-meta">
+      <span><strong>02+</strong> años creando<br />sitios web responsive</span>
+      <span><strong>{projectCount}</strong> {projects.length === 1 ? 'proyecto publicado' : 'proyectos publicados'}</span>
+    </div>
+  </div>
+  <div class="hero-console" aria-label="Perfil de desarrollador">
+    <div class="console-top"><span>PROFILE.exe</span><span>■ ■ ■</span></div>
+    <div class="avatar-stage">
+      <div class="code-screen" aria-hidden="true"><span>const deg = {'{'}</span><span>  coffee: true,</span><span>  code: 'ready'</span><span>{'};'}</span></div>
+      <div class="pixel-avatar" aria-hidden="true">
+        <i class="hair"></i><i class="face"></i><i class="neck"></i>
+        <i class="eye eye-left"></i><i class="eye eye-right"></i><i class="mouth"></i>
+        <i class="shirt"></i><i class="typing-hand"></i><i class="coffee-cup"></i><i class="coffee-steam"></i>
+      </div>
+      <div class="pixel-desk" aria-hidden="true"><span class="keyboard"></span><span class="desk-line"></span></div>
+      <div class="level-badge">LVL 04</div>
+    </div>
+    <div class="console-info"><span>PLAYER_01</span><strong>FULL-STACK<br />DEVELOPER</strong></div>
+    <div class="xp-label"><span>EXPERIENCIA</span><span>84%</span></div>
+    <div class="xp-bar"><span></span></div>
+    <div class="console-bottom"><span>STATUS: ONLINE</span><span>///</span></div>
+  </div>
+</section>

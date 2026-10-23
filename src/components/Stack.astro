@@ -1,0 +1,24 @@
+---
+import skills, { levels } from '../data/skills.js'
+---
+
+<section id="stack" class="stack section-shell">
+  <div class="section-heading"><div><p class="eyebrow">02 / herramientas</p><h2>Mi <span>stack</span></h2></div></div>
+  <div class="stack-grid">
+    {
+      skills.map((skill) => (
+        <article class="skill-item" data-level={skill.level}>
+          <div class={`skill-icon ${skill.iconClass ?? ''}`}>{skill.icon}</div>
+          <div>
+            <h3>{skill.name}</h3>
+            <p>{skill.description}</p>
+          </div>
+          <span class="skill-level" aria-label={`Nivel ${levels[skill.level]}`}>
+            <span class="skill-pips" aria-hidden="true"><i></i><i></i><i></i></span>
+            {levels[skill.level]}
+          </span>
+        </article>
+      ))
+    }
+  </div>
+</section>

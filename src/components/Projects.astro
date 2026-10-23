@@ -1,0 +1,49 @@
+---
+import projects from '../data/projects.js'
+import ProjectPreview from './ProjectPreview.jsx'
+
+// GitHub genera una imagen social para cada repositorio público.
+function repositoryImage(url) {
+  const match = url?.match(/^https:\/\/github\.com\/([^/]+\/[^/#?]+)/)
+  return match ? `https://opengraph.githubassets.com/1/${match[1].replace(/\.git$/, '')}` : null
+}
+---
+
+<section id="proyectos" class="projects section-shell">
+  <div class="section-heading">
+    <div><p class="eyebrow">01 / trabajo seleccionado</p><h2>Proyectos <span>destacados</span></h2></div>
+  </div>
+  {
+    projects.length ? (
+      <div class="project-grid">
+        {projects.map((project) => (
+          <article class="project-card">
+            <ProjectPreview
+              client:visible
+              name={project.name}
+              demo={project.demo}
+              repository={project.repository}
+              repositoryImage={repositoryImage(project.repository)}
+            />
+            <div class="project-details">
+              <span class="project-category">{project.category}</span>
+              <h3>{project.name}</h3>
+              <p>{project.description}</p>
+              {project.tags?.length > 0 && (
+                <ul class="project-tags">
+                  {project.tags.map((tag) => <li>{tag}</li>)}
+                </ul>
+              )}
+              <div class="project-links">
+                {project.repository && <a href={project.repository} target="_blank" rel="noopener noreferrer">Ver código en GitHub</a>}
+                {project.demo && <a href={project.demo} target="_blank" rel="noopener noreferrer">Ver proyecto en vivo</a>}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p class="project-empty">Aún no hay proyectos publicados. Agrega tus proyectos al catálogo para que aparezcan aquí para todos.</p>
+    )
+  }
+</section>

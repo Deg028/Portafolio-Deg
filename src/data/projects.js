@@ -1,3 +1,6 @@
+// Para agregar un proyecto, añade un objeto a este arreglo.
+// `repository` y `demo` son opcionales (usa null), pero debe haber al menos uno.
+// `tags` es opcional y muestra las tecnologías usadas en la tarjeta.
 const projects = [
   {
     name: 'Pokédex Web',
