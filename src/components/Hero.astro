@@ -38,17 +38,18 @@ const chips = [
   <div class="hero-console">
     <div class="console-top"><span>terminal — main</span><span class="console-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
     <div class="avatar-stage">
-      <svg class="dev-scene" viewBox="0 0 220 158" role="img" aria-label="Ilustración en pixel art de Deg frente a su computadora, subiendo un proyecto a producción" shape-rendering="crispEdges">
+      <svg class="dev-scene" viewBox="0 0 220 158" role="img" aria-label="Ilustración de un desarrollador escribiendo código y subiendo un proyecto a producción" shape-rendering="crispEdges">
         <!-- nube de despliegue -->
         <g class="scene-cloud">
           <rect x="164" y="10" width="40" height="14" fill="#fff" />
           <rect x="172" y="4" width="14" height="8" fill="#fff" />
           <rect x="186" y="6" width="12" height="6" fill="#fff" />
           <rect x="164" y="24" width="40" height="3" fill="#dff0fb" />
-          <rect x="183" y="8" width="3" height="3" fill="#182235" />
-          <rect x="180" y="11" width="9" height="3" fill="#182235" />
-          <rect x="177" y="14" width="15" height="3" fill="#182235" />
-          <rect x="183" y="17" width="3" height="6" fill="#182235" />
+          <rect x="183" y="6" width="4" height="3" fill="#182235" />
+          <rect x="181" y="9" width="8" height="3" fill="#182235" />
+          <rect x="179" y="12" width="12" height="3" fill="#182235" />
+          <rect x="177" y="15" width="16" height="3" fill="#182235" />
+          <rect x="182" y="18" width="6" height="5" fill="#182235" />
         </g>
         <!-- paquete que sube a la nube -->
         <g class="scene-package">
@@ -56,36 +57,12 @@ const chips = [
           <rect x="184" y="52" width="3" height="9" fill="#ec1c24" />
         </g>
 
-        <!-- retrato en pixel art (generado a partir de la foto) -->
-        <g class="scene-portrait" transform="translate(6 16)">
-          <path fill="#000000" d="M56 6h14v2h-14zM52 8h22v2h-22zM50 10h28v2h-28zM46 12h34v2h-34zM44 14h38v2h-38zM42 16h42v2h-42zM40 18h46v2h-46zM40 20h10v2h-10zM60 20h28v2h-28zM38 22h10v2h-10zM72 22h16v2h-16zM38 24h4v2h-4zM76 24h12v2h-12zM38 26h2v2h-2zM82 26h8v2h-8zM36 28h4v2h-4zM82 28h8v2h-8zM36 30h4v2h-4zM82 30h8v2h-8zM36 32h4v2h-4zM84 32h6v2h-6zM36 34h4v2h-4zM82 34h8v2h-8zM36 36h4v2h-4zM84 36h6v2h-6zM36 38h2v2h-2zM84 38h6v2h-6zM84 40h6v2h-6zM84 42h6v2h-6zM56 44h6v2h-6zM82 44h2v2h-2zM88 44h2v2h-2zM82 46h2v2h-2zM84 48h6v2h-6zM86 50h2v2h-2z" />
-          <path fill="#761c0f" d="M48 22h2v2h-2zM62 22h8v2h-8zM44 24h4v2h-4zM74 24h2v2h-2zM42 26h2v2h-2zM76 26h2v2h-2zM42 28h2v2h-2zM80 32h2v2h-2zM80 36h2v2h-2zM80 38h2v2h-2zM38 40h2v2h-2zM42 40h4v2h-4zM54 40h2v2h-2zM66 40h4v2h-4zM34 42h2v2h-2zM48 42h2v2h-2zM58 42h4v2h-4zM76 42h2v2h-2zM82 42h2v2h-2zM48 44h2v2h-2zM54 44h2v2h-2zM72 44h4v2h-4zM46 46h2v2h-2zM54 46h2v2h-2zM62 46h2v2h-2zM74 46h4v2h-4zM80 46h2v2h-2zM44 48h2v2h-2zM48 48h2v2h-2zM52 48h4v2h-4zM62 48h4v2h-4zM68 48h2v2h-2zM80 48h4v2h-4zM36 50h2v2h-2zM48 50h4v2h-4zM54 50h2v2h-2zM62 50h2v2h-2zM66 50h10v2h-10zM88 50h2v2h-2zM54 52h2v2h-2zM70 52h2v2h-2zM52 54h2v2h-2zM86 54h2v2h-2zM44 56h10v2h-10zM66 56h2v2h-2zM54 62h4v2h-4zM62 62h2v2h-2zM48 70h2v2h-2zM70 70h2v2h-2zM46 72h2v2h-2zM50 72h6v2h-6zM68 72h2v2h-2zM72 72h2v2h-2zM46 74h6v2h-6zM70 74h4v2h-4zM80 74h2v2h-2zM56 78h8v2h-8zM78 78h2v2h-2zM42 80h2v2h-2zM76 80h2v2h-2zM42 82h4v2h-4zM74 82h2v2h-2zM44 84h4v2h-4zM72 84h4v2h-4zM82 84h2v2h-2zM50 86h2v2h-2zM56 86h10v2h-10zM68 86h6v2h-6zM82 86h2v2h-2zM46 88h4v2h-4zM64 88h2v2h-2zM70 88h2v2h-2zM82 88h2v2h-2zM50 90h2v2h-2zM68 90h2v2h-2zM82 90h2v2h-2zM52 92h4v2h-4zM66 92h2v2h-2zM82 92h2v2h-2zM56 94h10v2h-10zM58 96h2v2h-2zM58 98h2v2h-2zM78 102h2v2h-2zM74 108h2v2h-2zM72 110h6v2h-6z" />
-          <path fill="#f47e5f" d="M50 24h8v2h-8zM68 24h2v2h-2zM48 26h2v2h-2zM54 26h16v2h-16zM44 28h2v2h-2zM50 28h12v2h-12zM66 28h4v2h-4zM46 30h26v2h-26zM48 32h22v2h-22zM48 34h24v2h-24zM76 34h2v2h-2zM48 36h20v2h-20zM76 36h2v2h-2zM66 38h2v2h-2zM76 38h2v2h-2zM76 40h4v2h-4zM32 48h2v2h-2zM58 50h4v2h-4zM56 52h4v2h-4zM90 52h2v2h-2zM58 54h6v2h-6zM58 56h6v2h-6zM40 58h4v2h-4zM56 58h10v2h-10zM78 58h4v2h-4zM90 58h2v2h-2zM40 60h4v2h-4zM46 60h4v2h-4zM64 60h2v2h-2zM74 60h2v2h-2zM78 60h4v2h-4zM44 62h4v2h-4zM72 62h4v2h-4zM78 62h4v2h-4zM88 62h2v2h-2zM66 64h4v2h-4zM74 64h6v2h-6zM86 64h2v2h-2zM66 66h6v2h-6z" />
-          <path fill="#ad0000" d="M56 72h2v2h-2zM36 84h2v2h-2zM36 86h2v2h-2zM36 88h2v2h-2zM84 88h2v2h-2zM36 90h4v2h-4zM84 90h2v2h-2zM38 92h2v2h-2zM84 92h2v2h-2zM26 94h2v2h-2zM38 94h2v2h-2zM82 94h4v2h-4zM22 96h4v2h-4zM38 96h4v2h-4zM56 96h2v2h-2zM80 96h4v2h-4zM20 98h10v2h-10zM40 98h4v2h-4zM56 98h2v2h-2zM60 98h2v2h-2zM80 98h4v2h-4zM18 100h12v2h-12zM42 100h2v2h-2zM58 100h4v2h-4zM80 100h2v2h-2zM98 100h2v2h-2zM16 102h16v2h-16zM44 102h2v2h-2zM58 102h4v2h-4zM80 102h2v2h-2zM96 102h2v2h-2zM14 104h18v2h-18zM46 104h2v2h-2zM76 104h4v2h-4zM96 104h6v2h-6zM14 106h16v2h-16zM48 106h2v2h-2zM76 106h2v2h-2zM96 106h6v2h-6zM12 108h18v2h-18zM72 108h2v2h-2zM76 108h2v2h-2zM96 108h8v2h-8zM12 110h18v2h-18zM78 110h4v2h-4zM96 110h12v2h-12z" />
-          <path fill="#a93818" d="M42 34h2v2h-2zM64 40h2v2h-2zM78 42h2v2h-2zM76 44h2v2h-2zM78 46h2v2h-2zM60 48h2v2h-2zM78 48h2v2h-2zM46 50h2v2h-2zM52 50h2v2h-2zM76 50h6v2h-6zM92 50h2v2h-2zM34 52h2v2h-2zM48 52h2v2h-2zM68 52h2v2h-2zM72 52h4v2h-4zM80 52h2v2h-2zM92 52h2v2h-2zM64 54h2v2h-2zM84 54h2v2h-2zM88 54h2v2h-2zM68 56h2v2h-2zM84 56h6v2h-6zM66 58h6v2h-6zM60 62h2v2h-2zM64 62h2v2h-2zM84 62h2v2h-2zM54 64h4v2h-4zM60 64h4v2h-4zM84 64h2v2h-2zM58 66h2v2h-2zM60 68h2v2h-2zM82 68h2v2h-2zM50 70h2v2h-2zM56 70h2v2h-2zM68 70h2v2h-2zM72 70h2v2h-2zM82 70h2v2h-2zM74 72h4v2h-4zM80 72h2v2h-2zM52 74h2v2h-2zM68 74h2v2h-2zM74 74h6v2h-6zM46 76h2v2h-2zM52 76h2v2h-2zM70 76h12v2h-12zM40 78h4v2h-4zM46 78h2v2h-2zM52 78h2v2h-2zM64 78h2v2h-2zM70 78h8v2h-8zM44 80h12v2h-12zM60 80h4v2h-4zM70 80h6v2h-6zM78 80h2v2h-2zM38 82h2v2h-2zM46 82h6v2h-6zM72 82h2v2h-2zM76 82h4v2h-4zM42 84h2v2h-2zM48 84h4v2h-4zM58 84h2v2h-2zM70 84h2v2h-2zM76 84h2v2h-2zM44 86h2v2h-2zM52 86h4v2h-4zM66 86h2v2h-2zM44 88h2v2h-2zM74 88h2v2h-2zM80 88h2v2h-2zM46 90h4v2h-4zM72 90h2v2h-2zM80 90h2v2h-2z" />
-          <path fill="#e37152" d="M50 22h6v2h-6zM48 24h2v2h-2zM58 24h10v2h-10zM70 24h2v2h-2zM46 26h2v2h-2zM74 26h2v2h-2zM62 28h4v2h-4zM44 30h2v2h-2zM78 30h2v2h-2zM46 32h2v2h-2zM78 32h2v2h-2zM46 34h2v2h-2zM46 36h2v2h-2zM56 38h10v2h-10zM78 38h2v2h-2zM74 40h2v2h-2zM32 44h2v2h-2zM32 46h2v2h-2zM42 46h2v2h-2zM38 48h4v2h-4zM58 48h2v2h-2zM92 48h2v2h-2zM40 50h2v2h-2zM90 50h2v2h-2zM40 52h2v2h-2zM78 52h2v2h-2zM82 52h2v2h-2zM56 54h2v2h-2zM76 54h4v2h-4zM82 54h2v2h-2zM90 54h2v2h-2zM36 56h6v2h-6zM56 56h2v2h-2zM80 56h4v2h-4zM36 58h4v2h-4zM44 58h4v2h-4zM76 58h2v2h-2zM82 58h2v2h-2zM86 58h2v2h-2zM34 60h6v2h-6zM50 60h2v2h-2zM60 60h4v2h-4zM66 60h2v2h-2zM72 60h2v2h-2zM88 60h2v2h-2zM34 62h10v2h-10zM48 62h2v2h-2zM66 62h2v2h-2zM86 62h2v2h-2zM34 64h18v2h-18zM70 64h4v2h-4zM80 64h2v2h-2zM38 66h4v2h-4zM48 66h6v2h-6zM64 66h2v2h-2zM76 66h6v2h-6zM86 66h2v2h-2zM38 68h2v2h-2zM72 68h2v2h-2zM62 74h4v2h-4zM38 78h2v2h-2zM90 94h2v2h-2zM94 96h2v2h-2zM102 100h2v2h-2zM0 102h2v2h-2zM106 102h2v2h-2z" />
-          <path fill="#e50000" d="M34 88h2v2h-2zM32 90h4v2h-4zM32 92h4v2h-4zM28 94h8v2h-8zM88 94h2v2h-2zM30 96h2v2h-2zM34 96h2v2h-2zM86 96h6v2h-6zM14 98h4v2h-4zM88 98h6v2h-6zM10 100h2v2h-2zM36 100h2v2h-2zM86 100h6v2h-6zM4 102h6v2h-6zM34 102h8v2h-8zM84 102h2v2h-2zM88 102h4v2h-4zM0 104h10v2h-10zM34 104h12v2h-12zM82 104h10v2h-10zM0 106h8v2h-8zM34 106h14v2h-14zM80 106h12v2h-12zM0 108h6v2h-6zM32 108h18v2h-18zM52 108h2v2h-2zM80 108h12v2h-12zM0 110h4v2h-4zM32 110h18v2h-18zM88 110h2v2h-2z" />
-          <path fill="#c90000" d="M34 86h2v2h-2zM36 92h2v2h-2zM86 92h2v2h-2zM36 94h2v2h-2zM86 94h2v2h-2zM20 96h2v2h-2zM26 96h4v2h-4zM32 96h2v2h-2zM36 96h2v2h-2zM84 96h2v2h-2zM18 98h2v2h-2zM30 98h10v2h-10zM84 98h4v2h-4zM94 98h2v2h-2zM12 100h6v2h-6zM30 100h6v2h-6zM38 100h4v2h-4zM82 100h4v2h-4zM92 100h6v2h-6zM10 102h6v2h-6zM32 102h2v2h-2zM42 102h2v2h-2zM82 102h2v2h-2zM86 102h2v2h-2zM92 102h4v2h-4zM98 102h6v2h-6zM10 104h4v2h-4zM32 104h2v2h-2zM80 104h2v2h-2zM92 104h4v2h-4zM102 104h8v2h-8zM8 106h6v2h-6zM30 106h4v2h-4zM50 106h2v2h-2zM78 106h2v2h-2zM92 106h4v2h-4zM102 106h10v2h-10zM6 108h6v2h-6zM30 108h2v2h-2zM50 108h2v2h-2zM78 108h2v2h-2zM92 108h4v2h-4zM104 108h8v2h-8zM4 110h8v2h-8zM30 110h2v2h-2zM50 110h4v2h-4zM82 110h6v2h-6zM90 110h6v2h-6zM108 110h4v2h-4z" />
-          <path fill="#d0380e" d="M58 70h2v2h-2zM56 76h2v2h-2zM50 78h2v2h-2zM52 82h4v2h-4zM34 84h2v2h-2zM42 86h2v2h-2zM76 86h2v2h-2zM74 90h2v2h-2zM30 92h2v2h-2zM40 92h2v2h-2zM48 92h2v2h-2zM72 92h8v2h-8zM42 94h2v2h-2zM50 94h2v2h-2zM68 94h4v2h-4zM18 96h2v2h-2zM42 96h4v2h-4zM52 96h2v2h-2zM66 96h6v2h-6zM76 96h2v2h-2zM92 96h2v2h-2zM44 98h2v2h-2zM50 98h4v2h-4zM66 98h6v2h-6zM76 98h4v2h-4zM8 100h2v2h-2zM46 100h2v2h-2zM50 100h4v2h-4zM66 100h6v2h-6zM74 100h4v2h-4zM46 102h10v2h-10zM64 102h12v2h-12zM50 104h6v2h-6zM64 104h12v2h-12zM52 106h4v2h-4zM58 106h2v2h-2zM64 106h4v2h-4zM54 108h8v2h-8zM64 108h6v2h-6zM54 110h16v2h-16z" />
-          <path fill="#d75d3a" d="M56 22h2v2h-2zM44 32h2v2h-2zM44 34h2v2h-2zM78 34h2v2h-2zM44 36h2v2h-2zM78 36h2v2h-2zM42 38h2v2h-2zM54 38h2v2h-2zM58 40h4v2h-4zM80 40h2v2h-2zM38 50h2v2h-2zM76 52h2v2h-2zM88 52h2v2h-2zM36 54h2v2h-2zM48 54h2v2h-2zM54 54h2v2h-2zM66 54h4v2h-4zM74 54h2v2h-2zM54 56h2v2h-2zM72 56h6v2h-6zM90 56h2v2h-2zM34 58h2v2h-2zM48 58h8v2h-8zM88 58h2v2h-2zM52 60h8v2h-8zM70 60h2v2h-2zM82 60h2v2h-2zM86 60h2v2h-2zM50 62h2v2h-2zM68 62h4v2h-4zM82 62h2v2h-2zM52 64h2v2h-2zM82 64h2v2h-2zM42 66h6v2h-6zM54 66h2v2h-2zM62 66h2v2h-2zM72 66h4v2h-4zM82 66h2v2h-2zM40 68h18v2h-18zM62 68h8v2h-8zM76 68h6v2h-6zM40 70h2v2h-2zM62 70h4v2h-4zM80 70h2v2h-2zM56 74h2v2h-2zM60 74h2v2h-2zM38 80h2v2h-2zM80 80h2v2h-2zM12 98h2v2h-2zM6 100h2v2h-2zM2 102h2v2h-2zM110 104h2v2h-2z" />
-          <path fill="#c04e2c" d="M58 22h2v2h-2zM56 40h2v2h-2zM62 40h2v2h-2zM56 50h2v2h-2zM82 50h2v2h-2zM42 52h4v2h-4zM50 52h4v2h-4zM64 52h4v2h-4zM44 54h4v2h-4zM50 54h2v2h-2zM70 54h4v2h-4zM80 54h2v2h-2zM92 54h2v2h-2zM34 56h2v2h-2zM64 56h2v2h-2zM70 56h2v2h-2zM84 58h2v2h-2zM84 60h2v2h-2zM52 62h2v2h-2zM64 64h2v2h-2zM56 66h2v2h-2zM60 66h2v2h-2zM58 68h2v2h-2zM70 68h2v2h-2zM42 70h6v2h-6zM52 70h4v2h-4zM66 70h2v2h-2zM74 70h2v2h-2zM42 72h4v2h-4zM44 74h2v2h-2zM54 74h2v2h-2zM66 74h2v2h-2zM44 76h2v2h-2zM48 76h4v2h-4zM66 76h4v2h-4zM44 78h2v2h-2zM48 78h2v2h-2zM66 78h4v2h-4zM64 80h6v2h-6zM40 82h2v2h-2zM58 82h2v2h-2zM62 82h10v2h-10zM80 82h2v2h-2zM40 84h2v2h-2zM56 84h2v2h-2zM60 84h10v2h-10zM32 88h2v2h-2zM86 88h2v2h-2zM86 90h2v2h-2zM28 92h2v2h-2zM16 96h2v2h-2zM96 98h2v2h-2zM100 100h2v2h-2z" />
-          <path fill="#320000" d="M70 22h2v2h-2zM80 28h2v2h-2zM80 30h2v2h-2zM40 32h2v2h-2zM40 34h2v2h-2zM80 34h2v2h-2zM40 36h2v2h-2zM38 38h2v2h-2zM82 38h2v2h-2zM46 40h2v2h-2zM50 40h4v2h-4zM82 40h2v2h-2zM50 42h8v2h-8zM62 42h4v2h-4zM72 42h4v2h-4zM50 44h4v2h-4zM62 44h10v2h-10zM50 46h4v2h-4zM56 46h2v2h-2zM64 46h10v2h-10zM34 48h2v2h-2zM50 48h2v2h-2zM56 48h2v2h-2zM66 48h2v2h-2zM70 48h8v2h-8zM84 50h2v2h-2zM84 52h4v2h-4zM48 72h2v2h-2zM70 72h2v2h-2zM46 86h4v2h-4zM50 88h14v2h-14zM66 88h4v2h-4zM52 90h16v2h-16zM56 92h10v2h-10z" />
-          <path fill="#250d0e" d="M54 4h16v2h-16zM50 6h2v2h-2zM72 6h2v2h-2zM46 8h4v2h-4zM76 8h2v2h-2zM44 10h2v2h-2zM78 10h2v2h-2zM42 12h2v2h-2zM82 12h2v2h-2zM40 14h2v2h-2zM84 14h2v2h-2zM38 16h2v2h-2zM84 16h2v2h-2zM36 18h2v2h-2zM86 18h2v2h-2zM52 20h6v2h-6zM88 20h2v2h-2zM88 22h2v2h-2zM34 24h2v2h-2zM42 24h2v2h-2zM34 26h2v2h-2zM78 26h4v2h-4zM90 26h2v2h-2zM34 28h2v2h-2zM40 28h2v2h-2zM90 28h2v2h-2zM40 30h2v2h-2zM90 30h2v2h-2zM90 32h2v2h-2zM90 34h2v2h-2zM32 36h2v2h-2zM82 36h2v2h-2zM90 36h2v2h-2zM32 38h2v2h-2zM34 40h4v2h-4zM48 40h2v2h-2zM66 42h6v2h-6zM34 44h2v2h-2zM80 44h2v2h-2zM84 44h4v2h-4zM90 44h2v2h-2zM34 46h2v2h-2zM48 46h2v2h-2zM58 46h4v2h-4zM86 46h6v2h-6zM36 48h2v2h-2z" />
-          <path fill="#b51e09" d="M58 62h2v2h-2zM58 64h2v2h-2zM58 72h10v2h-10zM54 76h2v2h-2zM54 78h2v2h-2zM56 80h4v2h-4zM36 82h2v2h-2zM38 84h2v2h-2zM80 84h2v2h-2zM38 86h2v2h-2zM74 86h2v2h-2zM80 86h2v2h-2zM84 86h2v2h-2zM38 88h2v2h-2zM72 88h2v2h-2zM70 90h2v2h-2zM50 92h2v2h-2zM68 92h4v2h-4zM80 92h2v2h-2zM24 94h2v2h-2zM40 94h2v2h-2zM52 94h4v2h-4zM66 94h2v2h-2zM80 94h2v2h-2zM54 96h2v2h-2zM60 96h6v2h-6zM54 98h2v2h-2zM62 98h4v2h-4zM44 100h2v2h-2zM54 100h4v2h-4zM62 100h4v2h-4zM78 100h2v2h-2zM56 102h2v2h-2zM62 102h2v2h-2zM76 102h2v2h-2zM104 102h2v2h-2zM48 104h2v2h-2zM56 104h8v2h-8zM56 106h2v2h-2zM60 106h4v2h-4zM68 106h8v2h-8zM62 108h2v2h-2zM70 108h2v2h-2zM70 110h2v2h-2z" />
-          <path fill="#a64d35" d="M60 22h2v2h-2zM72 24h2v2h-2zM44 26h2v2h-2zM78 28h2v2h-2zM42 30h2v2h-2zM42 32h2v2h-2zM42 36h2v2h-2zM40 38h2v2h-2zM44 38h10v2h-10zM40 40h2v2h-2zM70 40h4v2h-4zM38 42h2v2h-2zM46 42h2v2h-2zM80 42h2v2h-2zM46 44h2v2h-2zM78 44h2v2h-2zM44 46h2v2h-2zM42 48h2v2h-2zM46 48h2v2h-2zM90 48h2v2h-2zM34 50h2v2h-2zM42 50h4v2h-4zM64 50h2v2h-2zM36 52h4v2h-4zM46 52h2v2h-2zM62 52h2v2h-2zM34 54h2v2h-2zM38 54h6v2h-6zM42 56h2v2h-2zM78 56h2v2h-2zM72 58h4v2h-4zM36 66h2v2h-2zM84 66h2v2h-2zM36 68h2v2h-2zM84 68h2v2h-2zM38 70h2v2h-2zM38 72h4v2h-4zM82 72h2v2h-2zM38 74h6v2h-6zM38 76h6v2h-6zM80 78h2v2h-2zM40 80h2v2h-2zM22 94h2v2h-2z" />
-          <path fill="#f6937c" d="M50 26h4v2h-4zM70 26h4v2h-4zM46 28h4v2h-4zM70 28h8v2h-8zM72 30h6v2h-6zM70 32h8v2h-8zM72 34h4v2h-4zM68 36h8v2h-8zM68 38h8v2h-8zM40 42h6v2h-6zM38 44h8v2h-8zM38 46h4v2h-4zM32 50h2v2h-2zM32 52h2v2h-2zM60 52h2v2h-2zM32 54h2v2h-2zM32 56h2v2h-2zM92 56h2v2h-2zM32 58h2v2h-2zM32 60h2v2h-2zM44 60h2v2h-2zM76 60h2v2h-2zM90 60h2v2h-2zM32 62h2v2h-2zM76 62h2v2h-2zM90 62h2v2h-2zM88 64h2v2h-2zM88 92h2v2h-2zM98 98h2v2h-2z" />
-          <path fill="#d54816" d="M68 60h2v2h-2zM74 68h2v2h-2zM60 70h2v2h-2zM76 70h4v2h-4zM78 72h2v2h-2zM58 74h2v2h-2zM58 76h8v2h-8zM56 82h2v2h-2zM60 82h2v2h-2zM52 84h4v2h-4zM78 84h2v2h-2zM40 86h2v2h-2zM78 86h2v2h-2zM40 88h4v2h-4zM76 88h4v2h-4zM40 90h6v2h-6zM76 90h4v2h-4zM42 92h6v2h-6zM44 94h6v2h-6zM72 94h8v2h-8zM46 96h6v2h-6zM72 96h4v2h-4zM78 96h2v2h-2zM46 98h4v2h-4zM72 98h4v2h-4zM48 100h2v2h-2zM72 100h2v2h-2z" />
-          <path fill="#000002" d="M52 6h4v2h-4zM70 6h2v2h-2zM50 8h2v2h-2zM74 8h2v2h-2zM46 10h4v2h-4zM44 12h2v2h-2zM80 12h2v2h-2zM42 14h2v2h-2zM82 14h2v2h-2zM40 16h2v2h-2zM38 18h2v2h-2zM36 20h4v2h-4zM50 20h2v2h-2zM58 20h2v2h-2zM36 22h2v2h-2zM36 24h2v2h-2zM88 24h2v2h-2zM36 26h2v2h-2zM40 26h2v2h-2zM34 30h2v2h-2zM34 32h2v2h-2zM82 32h2v2h-2zM34 34h2v2h-2zM34 36h2v2h-2zM34 38h2v2h-2zM90 38h2v2h-2zM90 40h2v2h-2zM36 42h2v2h-2zM90 42h2v2h-2zM36 44h2v2h-2zM36 46h2v2h-2zM84 46h2v2h-2z" />
-        </g>
-
         <!-- escritorio y suelo -->
         <rect x="0" y="146" width="220" height="12" fill="#a83c35" />
         <rect x="0" y="146" width="220" height="3" fill="#182235" />
-        <rect x="0" y="129" width="220" height="17" fill="#7d2a27" />
-        <rect x="-2" y="124" width="224" height="5" fill="#a83c35" stroke="#182235" stroke-width="2" />
-        <rect x="104" y="120" width="36" height="4" fill="#f2c14e" stroke="#182235" stroke-width="2" />
+        <rect x="206" y="117" width="5" height="29" fill="#7d2a27" />
+        <rect x="98" y="112" width="122" height="5" fill="#a83c35" stroke="#182235" stroke-width="2" />
 
-        <g transform="translate(0 12)">
         <!-- monitor con terminal -->
         <rect x="159" y="98" width="8" height="14" fill="#182235" />
         <rect x="148" y="110" width="30" height="3" fill="#182235" />
@@ -104,8 +81,39 @@ const chips = [
         <rect x="186" y="102" width="9" height="10" fill="#ff7547" stroke="#182235" stroke-width="2" />
         <rect x="195" y="104" width="3" height="5" fill="none" stroke="#182235" stroke-width="2" />
         <rect class="scene-steam" x="189" y="94" width="2" height="6" fill="#fff" />
-        </g>
 
+        <!-- silla -->
+        <rect x="48" y="74" width="7" height="42" fill="#3a4a6b" stroke="#182235" stroke-width="2" />
+        <rect x="50" y="112" width="36" height="6" fill="#3a4a6b" stroke="#182235" stroke-width="2" />
+        <rect x="66" y="118" width="5" height="22" fill="#182235" />
+        <rect x="52" y="140" width="34" height="5" fill="#182235" />
+
+        <!-- desarrollador -->
+        <rect x="90" y="112" width="9" height="30" fill="#2a3550" stroke="#182235" stroke-width="2" />
+        <rect x="88" y="140" width="18" height="6" fill="#182235" />
+        <rect x="58" y="104" width="42" height="10" fill="#2a3550" stroke="#182235" stroke-width="2" />
+        <rect x="58" y="76" width="22" height="32" fill="#c4141c" stroke="#182235" stroke-width="2" />
+        <rect x="66" y="70" width="10" height="8" fill="#9c5a42" />
+        <rect x="62" y="46" width="24" height="26" fill="#c27a5c" stroke="#182235" stroke-width="2" />
+        <rect x="60" y="40" width="28" height="11" fill="#1d181e" />
+        <rect x="62" y="36" width="8" height="5" fill="#1d181e" />
+        <rect x="72" y="35" width="8" height="6" fill="#1d181e" />
+        <rect x="82" y="37" width="7" height="5" fill="#1d181e" />
+        <rect x="58" y="44" width="8" height="22" fill="#1d181e" />
+        <rect x="64" y="52" width="4" height="8" fill="#1d181e" />
+        <rect x="66" y="58" width="9" height="2" fill="#1d181e" />
+        <rect x="74" y="55" width="13" height="9" fill="#e9f3fa" fill-opacity="0.35" stroke="#1d181e" stroke-width="3" />
+        <rect x="79" y="58" width="3" height="3" fill="#1d181e" />
+        <rect x="79" y="66" width="8" height="2" fill="#1d181e" />
+        <rect x="80" y="69" width="5" height="2" fill="#7a3f3a" />
+        <rect x="76" y="70" width="10" height="5" fill="#1d181e" />
+        <rect x="68" y="62" width="4" height="6" fill="#9c5a42" />
+        <rect x="70" y="84" width="9" height="16" fill="#c4141c" stroke="#182235" stroke-width="2" />
+        <g class="scene-hands">
+          <rect x="76" y="96" width="30" height="7" fill="#c27a5c" stroke="#182235" stroke-width="2" />
+          <rect x="104" y="98" width="10" height="7" fill="#c27a5c" stroke="#182235" stroke-width="2" />
+        </g>
+        <rect x="104" y="108" width="36" height="4" fill="#f2c14e" stroke="#182235" stroke-width="2" />
       </svg>
       <div class="level-badge"><span class="status-dot" aria-hidden="true"></span>EN LÍNEA</div>
     </div>

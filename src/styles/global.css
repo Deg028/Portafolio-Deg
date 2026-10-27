@@ -589,7 +589,7 @@ code {
 }
 
 .scene-bar,
-.scene-portrait,
+.scene-hands,
 .scene-package,
 .scene-steam {
   transform-box: fill-box;
@@ -600,8 +600,8 @@ code {
   animation: scene-deploy 4s steps(16, end) infinite;
 }
 
-.scene-portrait {
-  animation: scene-breathe 2s steps(1, end) infinite;
+.scene-hands {
+  animation: scene-type 0.5s steps(1, end) infinite;
 }
 
 .scene-package {
@@ -623,9 +623,9 @@ code {
   }
 }
 
-@keyframes scene-breathe {
+@keyframes scene-type {
   50% {
-    transform: translate(6px, 17px);
+    transform: translateY(1px);
   }
 }
 
