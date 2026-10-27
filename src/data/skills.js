@@ -7,6 +7,7 @@ export const levels = {
 
 const skills = [
   { name: 'JavaScript', description: 'Lógica de aplicación e interactividad', icon: 'JS', iconClass: 'js-icon', level: 3 },
+  { name: 'TypeScript', description: 'Tipado estático en JavaScript', icon: 'TS', iconClass: 'ts-icon', level: 1 },
   { name: 'HTML + CSS', description: 'Maquetación responsive y accesible', icon: '</>', level: 3 },
   { name: 'Bootstrap', description: 'Prototipado rápido de interfaces', icon: 'B', iconClass: 'bootstrap-icon', level: 2 },
   { name: 'Python', description: 'Automatización y manejo de datos', icon: 'Py', iconClass: 'python-icon', level: 2 },

@@ -941,6 +941,11 @@ code {
   background: #f7df1e;
 }
 
+.ts-icon {
+  background: #3178c6;
+  color: #fff;
+}
+
 .bootstrap-icon {
   background: #7952b3;
   color: #fff;
