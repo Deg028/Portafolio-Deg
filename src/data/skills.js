@@ -6,14 +6,14 @@ export const levels = {
 }
 
 const skills = [
-  { name: 'JavaScript', description: 'Interacciones y lógica', icon: 'JS', iconClass: 'js-icon', level: 3 },
-  { name: 'HTML + CSS', description: 'Interfaces responsive', icon: '</>', level: 3 },
-  { name: 'Bootstrap', description: 'Sistemas y prototipos', icon: 'B', iconClass: 'bootstrap-icon', level: 2 },
-  { name: 'Python', description: 'Automatización y datos', icon: 'Py', iconClass: 'python-icon', level: 2 },
-  { name: 'Java', description: 'Desarrollo backend', icon: 'J', iconClass: 'java-icon', level: 3 },
-  { name: 'React', description: 'Interfaces y componentes', icon: 'R', iconClass: 'react-icon', level: 2 },
-  { name: 'GitHub', description: 'Control de versiones y colaboración', icon: 'GH', iconClass: 'github-icon', level: 3 },
-  { name: 'Netlify', description: 'Despliegue de sitios web', icon: 'N', iconClass: 'netlify-icon', level: 2 },
+  { name: 'JavaScript', description: 'Lógica de aplicación e interactividad', icon: 'JS', iconClass: 'js-icon', level: 3 },
+  { name: 'HTML + CSS', description: 'Maquetación responsive y accesible', icon: '</>', level: 3 },
+  { name: 'Bootstrap', description: 'Prototipado rápido de interfaces', icon: 'B', iconClass: 'bootstrap-icon', level: 2 },
+  { name: 'Python', description: 'Automatización y manejo de datos', icon: 'Py', iconClass: 'python-icon', level: 2 },
+  { name: 'Java', description: 'Lógica de servidor y backend', icon: 'J', iconClass: 'java-icon', level: 3 },
+  { name: 'React', description: 'Interfaces basadas en componentes', icon: 'R', iconClass: 'react-icon', level: 2 },
+  { name: 'GitHub', description: 'Control de versiones y trabajo colaborativo', icon: 'GH', iconClass: 'github-icon', level: 3 },
+  { name: 'Netlify', description: 'Despliegue continuo de sitios web', icon: 'N', iconClass: 'netlify-icon', level: 2 },
 ]
 
 export default skills

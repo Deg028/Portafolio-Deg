@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Pokédex Web",
+    "description": "Pokédex interactiva con estética retro. Busca Pokémon por nombre o número, filtra por generación, escucha música de batalla y cambia entre modo claro y oscuro. Datos en tiempo real desde la PokeAPI.",
+    "category": "Web App",
+    "tags": ["React", "Vite", "PokeAPI", "CSS"],
+    "image": "/projects/Pokedex.png",
+    "repository": "https://github.com/Deg028/Pokedex",
+    "demo": "https://pokedeg.netlify.app"
+  },
+  {
+    "name": "Retro Beats",
+    "description": "Reproductor de música para Android con seis temas visuales retro y modernos, letras sincronizadas, listas de reproducción y resumen de escucha mensual y anual.",
+    "category": "App móvil",
+    "tags": ["React Native", "Expo", "TypeScript"],
+    "image": "/projects/Retro-Beats-App.png",
+    "repository": "https://github.com/Deg028/Retro-Beats-App",
+    "demo": null
+  },
+  {
+    "name": "Pixelendo",
+    "description": "Sitio web sobre Nintendo con juegos icónicos, desarrolladores y tienda, con modo claro y oscuro. Maquetación responsive hecha con HTML, CSS y JavaScript.",
+    "category": "Sitio web",
+    "tags": ["HTML", "CSS", "JavaScript"],
+    "image": "/projects/Pixelendo-Web.png",
+    "repository": "https://github.com/Deg028/Pixelendo-Web",
+    "demo": "https://pixelendo-deg.netlify.app"
+  }
+]

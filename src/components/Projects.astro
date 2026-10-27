@@ -1,49 +1,78 @@
 ---
-import projects from '../data/projects.js'
-import ProjectPreview from './ProjectPreview.jsx'
-
-// GitHub genera una imagen social para cada repositorio público.
-function repositoryImage(url) {
-  const match = url?.match(/^https:\/\/github\.com\/([^/]+\/[^/#?]+)/)
-  return match ? `https://opengraph.githubassets.com/1/${match[1].replace(/\.git$/, '')}` : null
-}
+import projects from '../data/projects.json'
+import ProjectAdmin from './ProjectAdmin.astro'
 ---
 
 <section id="proyectos" class="projects section-shell">
   <div class="section-heading">
-    <div><p class="eyebrow">01 / trabajo seleccionado</p><h2>Proyectos <span>destacados</span></h2></div>
+    <p class="eyebrow">01 / proyectos</p>
+    <h2>Proyectos <span>destacados</span></h2>
+    <p class="section-subtitle">Aplicaciones web y móviles que he construido y publicado. Cada tarjeta enlaza al sitio en vivo o al código en GitHub.</p>
   </div>
+  {import.meta.env.DEV && <ProjectAdmin />}
   {
     projects.length ? (
-      <div class="project-grid">
-        {projects.map((project) => (
-          <article class="project-card">
-            <ProjectPreview
-              client:visible
-              name={project.name}
-              demo={project.demo}
-              repository={project.repository}
-              repositoryImage={repositoryImage(project.repository)}
-            />
-            <div class="project-details">
-              <span class="project-category">{project.category}</span>
-              <h3>{project.name}</h3>
-              <p>{project.description}</p>
-              {project.tags?.length > 0 && (
-                <ul class="project-tags">
-                  {project.tags.map((tag) => <li>{tag}</li>)}
-                </ul>
+      <ul class="project-list">
+        {projects.map((project) => {
+          const primary = project.demo ?? project.repository
+          const cta = project.demo ? 'Ver demo' : 'Ver código'
+          return (
+            <li class="project-card" data-reveal data-cta={cta}>
+              {project.image ? (
+                <img class="project-card-bg" src={project.image} alt="" width="1280" height="800" loading="lazy" decoding="async" />
+              ) : (
+                <div class="project-card-bg project-card-fallback" aria-hidden="true">{project.name.slice(0, 1)}</div>
               )}
-              <div class="project-links">
-                {project.repository && <a href={project.repository} target="_blank" rel="noopener noreferrer">Ver código en GitHub</a>}
-                {project.demo && <a href={project.demo} target="_blank" rel="noopener noreferrer">Ver proyecto en vivo</a>}
+              <div class="project-card-content">
+                <span class="project-category">{project.category}</span>
+                <h3 class="project-card-title">
+                  <a class="project-card-link" href={primary} target="_blank" rel="noopener noreferrer">{project.name}</a>
+                </h3>
+                <p class="project-card-desc">{project.description}</p>
+                {project.tags?.length > 0 && (
+                  <ul class="project-tags">
+                    {project.tags.map((tag) => <li>{tag}</li>)}
+                  </ul>
+                )}
+                <div class="project-links">
+                  {project.repository && <a href={project.repository} target="_blank" rel="noopener noreferrer">Código en GitHub</a>}
+                  {project.demo && <a href={project.demo} target="_blank" rel="noopener noreferrer">Sitio en vivo</a>}
+                </div>
+                {import.meta.env.DEV && (
+                  <button type="button" class="project-remove" data-remove-project={project.name}>Quitar del catálogo</button>
+                )}
               </div>
-            </div>
-          </article>
-        ))}
-      </div>
+            </li>
+          )
+        })}
+      </ul>
     ) : (
-      <p class="project-empty">Aún no hay proyectos publicados. Agrega tus proyectos al catálogo para que aparezcan aquí para todos.</p>
+      <p class="project-empty">Estoy preparando nuevos proyectos. Vuelve pronto.</p>
     )
   }
+  <div class="card-cursor" id="card-cursor" aria-hidden="true"></div>
 </section>
+
+<script>
+  // Etiqueta que sigue al cursor sobre las tarjetas (solo con ratón, no en pantallas táctiles).
+  const cursor = document.getElementById('card-cursor')
+  if (cursor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    let frame = 0
+    document.querySelectorAll<HTMLElement>('.project-card').forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        cursor.textContent = card.dataset.cta ?? ''
+        cursor.classList.add('visible')
+      })
+      card.addEventListener('mouseleave', () => cursor.classList.remove('visible'))
+      card.addEventListener('mousemove', (event) => {
+        // Sobre los enlaces secundarios la etiqueta se oculta para no tapar el texto.
+        cursor.classList.toggle('visible', !(event.target as Element).closest('.project-links, .project-remove'))
+        cancelAnimationFrame(frame)
+        frame = requestAnimationFrame(() => {
+          cursor.style.left = `${event.clientX}px`
+          cursor.style.top = `${event.clientY}px`
+        })
+      })
+    })
+  }
+</script>

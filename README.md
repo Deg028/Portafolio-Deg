@@ -1,6 +1,8 @@
 # Portafolio de Deg
 
-Portafolio estático creado con Astro y React. Astro genera toda la página en HTML estático; el tema y el menú usan un script pequeño sin React, y React solo se usa en la vista previa de cada proyecto (`src/components/ProjectPreview.jsx`). Si el JS falla, el contenido y los enlaces siguen funcionando.
+Portafolio estático creado con Astro, sin frameworks de interfaz en el navegador. Astro genera toda la página en HTML estático; el tema, el menú, el efecto de escritura y la etiqueta de las tarjetas usan scripts pequeños. Si el JS falla, el contenido y los enlaces siguen funcionando.
+
+La interfaz toma como referencia el portafolio [PotatoSlop/portfolio](https://github.com/PotatoSlop/portfolio) (navegación en píldoras con barrido, título grande con efecto de escritura, banco de accesos con borde discontinuo, tarjetas de proyecto con imagen y etiqueta que sigue al cursor, pie curvo) manteniendo la identidad propia: tipografía pixel, paleta rojo/amarillo, escena del desarrollador y modo oscuro.
 
 ## Requisitos
 
@@ -32,46 +34,29 @@ npm run build
 
 ## Proyectos publicados
 
-El catálogo compartido vive en `src/data/projects.js`. Los proyectos incluidos allí se muestran a todos los visitantes; ya no se guardan en el navegador de cada persona.
+El catálogo vive en `src/data/projects.json` y se versiona en Git. Todo lo que esté ahí se genera como HTML estático, por lo que **lo ven todos los visitantes** cuando el sitio se despliega.
 
-### Agregar un proyecto
+### Agregar un proyecto (flujo local → público)
 
-1. Abre `src/data/projects.js` y agrega un objeto al arreglo:
-
-   ```js
-   const projects = [
-     {
-       name: 'Nombre de mi proyecto',
-       description: 'Qué hace el proyecto y qué parte desarrollé.',
-       category: 'Web App',
-       tags: ['Astro', 'React'], // opcional
-       repository: 'https://github.com/mi-usuario/mi-repositorio',
-       demo: 'https://mi-proyecto.netlify.app',
-     },
-   ]
-
-   export default projects
-   ```
-
-2. Sustituye los valores de ejemplo por los datos reales. `repository` enlaza al código y `demo` al sitio publicado. Si no tienes uno de los enlaces, puedes asignarle `null`; agrega al menos uno. Para incluir varios proyectos, separa los objetos con comas.
-3. Guarda el archivo y ejecuta `npm run dev` para revisar la página localmente en `http://localhost:4321/`. Confirma que los textos y enlaces sean correctos y revisa la presentación en escritorio y móvil.
-4. Verifica que el sitio compile:
+1. Ejecuta `npm run dev` y abre `http://localhost:4321/`.
+2. En la sección **Proyectos** aparece el panel punteado **«+ Agregar proyecto»** (solo existe en local). Llena nombre, descripción, categoría, tecnologías y al menos un enlace (repositorio o demo) y pulsa **Guardar en el catálogo**.
+3. El proyecto se escribe en `src/data/projects.json` y aparece al instante. Cada tarjeta tiene un botón **«Quitar del catálogo»** (también solo en local).
+4. Verifica que compile y publica:
 
    ```sh
    npm run build
-   ```
-
-5. Sube el cambio a GitHub:
-
-   ```sh
-   git add src/data/projects.js
+   git add src/data/projects.json
    git commit -m "Add portfolio project"
    git push origin main
    ```
 
-6. Confirma que el despliegue termine en la plataforma de hosting. Si está configurada para publicar los cambios de `main`, el `push` iniciará el despliegue automáticamente; de lo contrario, tendrás que iniciarlo desde esa plataforma.
+5. Si el hosting está configurado para desplegar `main`, el `push` publica el cambio para todos; de lo contrario, inicia el despliegue desde la plataforma.
 
-Cada proyecto se muestra como una tarjeta con pestañas de vista previa: **Sitio** (el iframe se carga al pulsar «Cargar vista previa», para no frenar la página) y **Repositorio** (imagen que GitHub genera para el repo). Algunos sitios bloquean el iframe; en ese caso los enlaces de la tarjeta abren el sitio directamente.
+También puedes editar `src/data/projects.json` a mano: cada objeto lleva `name`, `description`, `category`, `tags` (arreglo, puede ser vacío), `image` (ruta en `public/`, por ejemplo `/projects/captura.png`, o `null`), `repository` y `demo` (usa `null` si no aplica, pero debe haber al menos uno).
+
+El panel y el botón «Quitar» no se incluyen en `npm run build`, y la ruta que escribe el archivo (`integrations/projects-dev-api.mjs`) solo existe en el servidor de desarrollo.
+
+Cada proyecto es una tarjeta con su captura de fondo; al pulsarla abre el sitio en vivo (o el repositorio si no hay demo) y los enlaces de abajo permiten elegir. Guarda las capturas en `public/projects/`.
 
 ## Habilidades
 

@@ -1,0 +1,71 @@
+---
+// Panel solo de desarrollo (`npm run dev`): se renderiza únicamente cuando
+// `import.meta.env.DEV` es verdadero, por lo que nunca llega al sitio publicado.
+---
+
+<details class="project-admin">
+  <summary>+ Agregar proyecto <small>(solo visible en local)</small></summary>
+  <form id="project-form" class="project-form" novalidate>
+    <label>Nombre<input name="name" required maxlength="80" autocomplete="off" /></label>
+    <label>Categoría<input name="category" maxlength="40" placeholder="Web App" autocomplete="off" /></label>
+    <label class="wide">Descripción<textarea name="description" required maxlength="400" rows="3"></textarea></label>
+    <label class="wide">Tecnologías (separadas por coma)<input name="tags" placeholder="Astro, React, API REST" autocomplete="off" /></label>
+    <label class="wide">Imagen (ruta en /public o URL, opcional)<input name="image" placeholder="/projects/mi-proyecto.png" autocomplete="off" /></label>
+    <label>Repositorio<input name="repository" type="url" placeholder="https://github.com/usuario/repo" autocomplete="off" /></label>
+    <label>Demo en vivo<input name="demo" type="url" placeholder="https://mi-proyecto.netlify.app" autocomplete="off" /></label>
+    <p id="project-form-status" class="project-form-status wide" role="status"></p>
+    <button class="button button-primary wide" type="submit">Guardar en el catálogo</button>
+    <p class="project-form-help wide">
+      Se guarda en <code>src/data/projects.json</code>. Para que lo vean todos:
+      <code>git add src/data/projects.json</code>, <code>git commit</code> y <code>git push</code>; el hosting publica el cambio.
+    </p>
+  </form>
+</details>
+
+<script is:inline>
+  ;(function () {
+    var form = document.getElementById('project-form')
+    var status = document.getElementById('project-form-status')
+
+    function request(method, body) {
+      return fetch('/__projects', {
+        method: method,
+        headers: { 'Content-Type': 'application/json', 'x-portfolio-dev': '1' },
+        body: JSON.stringify(body),
+      }).then(function (response) {
+        return response.json().then(function (data) {
+          if (!response.ok) throw new Error(data.error || 'No se pudo completar la acción.')
+          return data
+        })
+      })
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault()
+      var data = Object.fromEntries(new FormData(form))
+      status.textContent = 'Guardando…'
+      request('POST', data)
+        .then(function () {
+          status.textContent = 'Guardado. Recargando la página…'
+          window.location.reload()
+        })
+        .catch(function (error) {
+          status.textContent = error.message
+        })
+    })
+
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest('[data-remove-project]')
+      if (!button) return
+      var name = button.getAttribute('data-remove-project')
+      if (!window.confirm('¿Quitar «' + name + '» del catálogo?')) return
+      request('DELETE', { name: name })
+        .then(function () {
+          window.location.reload()
+        })
+        .catch(function (error) {
+          window.alert(error.message)
+        })
+    })
+  })()
+</script>

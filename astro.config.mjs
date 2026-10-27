@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config'
-import react from '@astrojs/react'
+import projectsDevApi from './integrations/projects-dev-api.mjs'
 
 export default defineConfig({
-  integrations: [react()],
+  site: 'https://portafolio-deg.vercel.app',
+  integrations: [projectsDevApi()],
 })

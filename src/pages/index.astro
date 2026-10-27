@@ -1,28 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Loader from '../components/Loader.astro'
 import Header from '../components/Header.astro'
 import Hero from '../components/Hero.astro'
 import Projects from '../components/Projects.astro'
 import Stack from '../components/Stack.astro'
 import About from '../components/About.astro'
-import Contact from '../components/Contact.astro'
 import Footer from '../components/Footer.astro'
 ---
 
 <Layout
   title="Deg | Desarrollador Full Stack"
-  description="Portafolio de Deg, desarrollador web full stack. Proyectos, herramientas y contacto."
+  description="Portafolio de Deg, desarrollador web full stack. Proyectos, stack tecnológico y contacto."
 >
-  <Loader />
-  <div class="scanlines" aria-hidden="true"></div>
   <Header />
-  <main>
+  <main id="contenido">
     <Hero />
     <Projects />
     <Stack />
     <About />
-    <Contact />
   </main>
   <Footer />
 </Layout>

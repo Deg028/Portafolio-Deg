@@ -1,38 +1,148 @@
 ---
-import projects from '../data/projects.js'
+import projects from '../data/projects.json'
 
 const projectCount = String(projects.length).padStart(2, '0')
+const roles = ['Desarrollador full stack', 'Interfaces web responsive', 'Backend y APIs', 'Despliegue continuo']
+const chips = [
+  { href: '#proyectos', label: 'Proyectos' },
+  { href: '#stack', label: 'Frontend' },
+  { href: '#stack', label: 'Backend' },
+  { href: '#contacto', label: 'Contacto' },
+]
 ---
 
 <section id="inicio" class="hero section-shell">
   <div class="hero-copy">
-    <p class="eyebrow"><span class="status-dot"></span>Disponible para proyectos</p>
-    <h1>Desarrollo web full stack: <em>frontend atractivo y backend eficiente.</em></h1>
-    <p class="hero-intro">Desarrollador full stack enfocado en crear productos claros, veloces y con personalidad. Código limpio, ideas grandes.</p>
+    <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>Disponible para nuevas oportunidades</p>
+    <p class="hero-greeting">Hola, soy</p>
+    <h1 class="hero-name">Deg</h1>
+    <p class="hero-role" aria-live="off">
+      <span id="typed-role" data-roles={JSON.stringify(roles)}>{roles[0]}</span><span class="typed-caret" aria-hidden="true"></span>
+    </p>
+    <p class="hero-intro">Diseño, desarrollo y despliego aplicaciones web de principio a fin: interfaces responsive, lógica de servidor y publicación en producción, con código mantenible y flujo de trabajo en Git.</p>
     <div class="hero-actions">
-      <a class="button button-primary" href="#proyectos">Ver proyectos <span aria-hidden="true">-&gt;</span></a>
+      <a class="button button-primary" href="#proyectos">Ver proyectos <span aria-hidden="true">→</span></a>
       <a class="button button-ghost" href="#contacto">Contáctame</a>
     </div>
+    <div class="role-bank" role="group" aria-label="Accesos rápidos">
+      {chips.map((chip) => (
+        <a class="role-chip" href={chip.href}><span class="bracket" aria-hidden="true">[</span>{chip.label}<span class="bracket" aria-hidden="true">]</span></a>
+      ))}
+    </div>
     <div class="hero-meta">
-      <span><strong>02+</strong> años creando<br />sitios web responsive</span>
-      <span><strong>{projectCount}</strong> {projects.length === 1 ? 'proyecto publicado' : 'proyectos publicados'}</span>
+      <span><strong>2+</strong> años de experiencia<br />en desarrollo web</span>
+      <span><strong>{projectCount}</strong> {projects.length === 1 ? 'proyecto publicado' : 'proyectos publicados'}<br />en GitHub</span>
     </div>
   </div>
-  <div class="hero-console" aria-label="Perfil de desarrollador">
-    <div class="console-top"><span>PROFILE.exe</span><span>■ ■ ■</span></div>
+
+  <div class="hero-console">
+    <div class="console-top"><span>terminal — main</span><span class="console-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
     <div class="avatar-stage">
-      <div class="code-screen" aria-hidden="true"><span>const deg = {'{'}</span><span>  coffee: true,</span><span>  code: 'ready'</span><span>{'};'}</span></div>
-      <div class="pixel-avatar" aria-hidden="true">
-        <i class="hair"></i><i class="face"></i><i class="neck"></i>
-        <i class="eye eye-left"></i><i class="eye eye-right"></i><i class="mouth"></i>
-        <i class="shirt"></i><i class="typing-hand"></i><i class="coffee-cup"></i><i class="coffee-steam"></i>
-      </div>
-      <div class="pixel-desk" aria-hidden="true"><span class="keyboard"></span><span class="desk-line"></span></div>
-      <div class="level-badge">LVL 04</div>
+      <svg class="dev-scene" viewBox="0 0 220 158" role="img" aria-label="Ilustración de un desarrollador escribiendo código y subiendo un proyecto a producción" shape-rendering="crispEdges">
+        <!-- nube de despliegue -->
+        <g class="scene-cloud">
+          <rect x="164" y="10" width="40" height="14" fill="#fff" />
+          <rect x="172" y="4" width="14" height="8" fill="#fff" />
+          <rect x="186" y="6" width="12" height="6" fill="#fff" />
+          <rect x="164" y="24" width="40" height="3" fill="#dff0fb" />
+          <rect x="183" y="8" width="3" height="3" fill="#182235" />
+          <rect x="180" y="11" width="9" height="3" fill="#182235" />
+          <rect x="177" y="14" width="15" height="3" fill="#182235" />
+          <rect x="183" y="17" width="3" height="6" fill="#182235" />
+        </g>
+        <!-- paquete que sube a la nube -->
+        <g class="scene-package">
+          <rect x="181" y="52" width="9" height="9" fill="#f2c14e" stroke="#182235" stroke-width="2" />
+          <rect x="184" y="52" width="3" height="9" fill="#ec1c24" />
+        </g>
+
+        <!-- escritorio y suelo -->
+        <rect x="0" y="146" width="220" height="12" fill="#a83c35" />
+        <rect x="0" y="146" width="220" height="3" fill="#182235" />
+        <rect x="206" y="117" width="5" height="29" fill="#7d2a27" />
+        <rect x="98" y="112" width="122" height="5" fill="#a83c35" stroke="#182235" stroke-width="2" />
+
+        <!-- monitor con terminal -->
+        <rect x="159" y="98" width="8" height="14" fill="#182235" />
+        <rect x="148" y="110" width="30" height="3" fill="#182235" />
+        <rect x="124" y="44" width="82" height="54" fill="#182235" />
+        <rect x="128" y="48" width="74" height="46" fill="#0f1624" />
+        <g class="scene-terminal">
+          <text x="132" y="57" fill="#8be9a8">$ git add .</text>
+          <text x="132" y="65" fill="#8be9a8">$ git commit</text>
+          <text x="132" y="73" fill="#8be9a8">$ git push</text>
+          <text x="132" y="81" fill="#f2c14e">&gt; deploy: Netlify</text>
+        </g>
+        <rect x="132" y="85" width="66" height="5" fill="none" stroke="#5e6878" stroke-width="1" />
+        <rect class="scene-bar" x="133" y="86" width="64" height="3" fill="#8be9a8" />
+
+        <!-- taza -->
+        <rect x="186" y="102" width="9" height="10" fill="#ff7547" stroke="#182235" stroke-width="2" />
+        <rect x="195" y="104" width="3" height="5" fill="none" stroke="#182235" stroke-width="2" />
+        <rect class="scene-steam" x="189" y="94" width="2" height="6" fill="#fff" />
+
+        <!-- silla -->
+        <rect x="48" y="74" width="7" height="42" fill="#3a4a6b" stroke="#182235" stroke-width="2" />
+        <rect x="50" y="112" width="36" height="6" fill="#3a4a6b" stroke="#182235" stroke-width="2" />
+        <rect x="66" y="118" width="5" height="22" fill="#182235" />
+        <rect x="52" y="140" width="34" height="5" fill="#182235" />
+
+        <!-- desarrollador -->
+        <rect x="90" y="112" width="9" height="30" fill="#2a3550" stroke="#182235" stroke-width="2" />
+        <rect x="88" y="140" width="18" height="6" fill="#182235" />
+        <rect x="58" y="104" width="42" height="10" fill="#2a3550" stroke="#182235" stroke-width="2" />
+        <rect x="58" y="76" width="22" height="32" fill="#ec1c24" stroke="#182235" stroke-width="2" />
+        <rect x="66" y="70" width="10" height="8" fill="#d9906e" />
+        <rect x="62" y="46" width="24" height="26" fill="#f2b98e" stroke="#182235" stroke-width="2" />
+        <rect x="60" y="42" width="28" height="9" fill="#182235" />
+        <rect x="58" y="46" width="8" height="20" fill="#182235" />
+        <rect x="75" y="57" width="10" height="7" fill="none" stroke="#182235" stroke-width="2" />
+        <rect x="79" y="59" width="3" height="3" fill="#182235" />
+        <rect x="79" y="67" width="6" height="2" fill="#a64d55" />
+        <rect x="70" y="84" width="9" height="16" fill="#ec1c24" stroke="#182235" stroke-width="2" />
+        <g class="scene-hands">
+          <rect x="76" y="96" width="30" height="7" fill="#f2b98e" stroke="#182235" stroke-width="2" />
+          <rect x="104" y="98" width="10" height="7" fill="#f2b98e" stroke="#182235" stroke-width="2" />
+        </g>
+        <rect x="104" y="108" width="36" height="4" fill="#f2c14e" stroke="#182235" stroke-width="2" />
+      </svg>
+      <div class="level-badge"><span class="status-dot" aria-hidden="true"></span>EN LÍNEA</div>
     </div>
-    <div class="console-info"><span>PLAYER_01</span><strong>FULL-STACK<br />DEVELOPER</strong></div>
-    <div class="xp-label"><span>EXPERIENCIA</span><span>84%</span></div>
-    <div class="xp-bar"><span></span></div>
-    <div class="console-bottom"><span>STATUS: ONLINE</span><span>///</span></div>
+    <div class="console-info"><span>ROL</span><strong>DESARROLLADOR<br />FULL STACK</strong></div>
+    <div class="console-stack"><span>STACK</span><span>JavaScript · Java · Python</span></div>
+    <div class="console-bottom"><span>ESTADO: DISPONIBLE</span><span>///</span></div>
   </div>
 </section>
+
+<script>
+  // Efecto de escritura para el rol. El HTML ya trae el primer rol, así que sin JS (o con
+  // movimiento reducido) el texto se queda fijo y legible.
+  const target = document.getElementById('typed-role')
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  if (target && !reduced) {
+    const roles: string[] = JSON.parse(target.dataset.roles ?? '[]')
+    const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+    async function run() {
+      let index = 0
+      while (document.body.contains(target)) {
+        const role = roles[index % roles.length]
+        for (let i = 1; i <= role.length; i++) {
+          target!.textContent = role.slice(0, i)
+          await sleep(70)
+        }
+        await sleep(1800)
+        for (let i = role.length - 1; i >= 0; i--) {
+          target!.textContent = role.slice(0, i)
+          await sleep(35)
+        }
+        await sleep(300)
+        index++
+      }
+    }
+
+    // Se espera un momento para que la primera frase se lea completa antes de borrarla.
+    setTimeout(run, 2200)
+  }
+</script>
